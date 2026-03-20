@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<registry xmlns:i18n="http://xml.zope.org/namespaces/i18n" i18n:domain="medialog.imprintnewsletter">
+
+  <record name="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterSettings.footer_text" interface="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterSettings" field="footer_text">
+
+  </record>
+
+  <record name="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterSettings.disclaimer_text" interface="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterSettings" field="disclaimer_text">
+
+  </record>
+
+  <record name="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterSettings.newsletter_from" interface="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterSettings" field="newsletter_from">
+  </record>
+
+
+
+
+</registry>
+

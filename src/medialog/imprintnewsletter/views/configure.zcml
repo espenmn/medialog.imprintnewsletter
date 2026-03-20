@@ -1,0 +1,59 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="medialog.imprintnewsletter">
+
+ <!-- -*- extra stuff goes here -*- -->
+
+  <browser:page
+    name="manage-subscribers"
+    for="Products.CMFPlone.interfaces.siteroot.IPloneSiteRoot"
+    class=".manage_subscribers.ManageSubscribersView"
+    template="manage_subscribers.pt"
+    permission="cmf.ManagePortal"
+    layer="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterLayer"
+    />
+
+    <browser:page
+        name="import-emaillist"
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        class=".emaillist.EmailList"
+        permission="cmf.ManagePortal"
+    />
+
+    <browser:page
+      name="export-newsletter-emails"
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        class=".emaillist.ExportNewsletterEmails"
+        permission="cmf.ManagePortal"
+    />
+
+  <browser:page
+    name="subscribe"
+    for="Products.CMFPlone.interfaces.siteroot.IPloneSiteRoot"
+    class=".manage_subscribers.SubscribeView"
+    template="subscribe.pt"
+    permission="zope2.View"
+    layer="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterLayer"
+    />
+
+  <browser:page
+    name="send-news-letter"
+    for="medialog.imprintnewsletter.content.news_letter.NewsLetter"
+    class=".send_news_letter_view.SendNewsLetterView"
+    template="send_news_letter_view.pt"
+    permission="cmf.ManagePortal"
+    layer="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterLayer"
+    />
+
+  <browser:page
+    name="news-letter-view"
+    for="medialog.imprintnewsletter.content.news_letter.NewsLetter"
+    class=".news_letter_view.NewsLetterView"
+    template="news_letter_view.pt"
+    permission="zope2.View"
+    layer="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterLayer"
+    />
+
+</configure>

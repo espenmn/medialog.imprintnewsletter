@@ -1,0 +1,5 @@
+===================
+medialog.imprintnewsletter
+===================
+
+User documentation

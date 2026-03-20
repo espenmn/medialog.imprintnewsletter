@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layers>
+  <layer
+      name="medialog.imprintnewsletter"
+      interface="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterLayer"
+      />
+</layers>

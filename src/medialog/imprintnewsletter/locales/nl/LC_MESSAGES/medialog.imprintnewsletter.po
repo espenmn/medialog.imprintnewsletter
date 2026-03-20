@@ -1,0 +1,100 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2025-08-01 11:41+0000\n"
+"PO-Revision-Date: 2025-08-01 15:13+0200\n"
+"Last-Translator: espenm <post@medialog.no>\n"
+"Language-Team: \n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: DOMAIN\n"
+"X-Generator: Poedit 3.2\n"
+
+#: ../profiles/default/types/NewsLetter.xml
+msgid "A Content Type to send newsletter"
+msgstr ""
+
+#: ../configure.zcml:27
+msgid "Installs the medialog.imprintnewsletter add-on."
+msgstr ""
+
+#: ../content/news_letter.py:37
+msgid "Items to send"
+msgstr "Te verzenden artikelen"
+
+#: ../profiles/default/types/NewsLetter.xml
+msgid "NewsLetter"
+msgstr "Nieuwsbrief"
+
+#: ../views/news_letter_view.pt:71
+msgid "Read More …"
+msgstr "Lees verder …"
+
+#: ../views/send_news_letter_view.pt:11
+msgid "Sample View"
+msgstr ""
+
+#: ../views/news_letter_view.pt:85
+msgid "Send Mail to everybody"
+msgstr "Stuur e-mail naar iedereen"
+
+#: ../views/news_letter_view.pt:84
+msgid "Send Testmail"
+msgstr "Testmail verzenden"
+
+#: ../content/news_letter.py:32
+msgid "Text"
+msgstr "Tekst"
+
+#: ../configure.zcml:36
+msgid "Uninstalls the medialog.imprintnewsletter add-on."
+msgstr ""
+
+#. Default: "Aanmelden"
+#: ../views/manage_subscribers.pt:24
+msgid "button_subscribe"
+msgstr "Aanmelden"
+
+#. Default: "Afmelden"
+#: ../views/manage_subscribers.pt:27
+msgid "button_unsubscribe"
+msgstr "Afmelden"
+
+#. Default: "Could not send to $email"
+#: ../views/send_news_letter_view.py:209
+msgid "cant_send_mail_message"
+msgstr "Kon niet verzenden naar $email»"
+
+#. Default: "Voer uw e-mailadres in"
+#: ../views/manage_subscribers.pt:17
+msgid "email_placeholder"
+msgstr ""
+
+#. Default: "Huidige abonnees"
+#: ../views/manage_subscribers.pt:36
+msgid "heading_current_subscribers"
+msgstr "Huidige abonnees"
+
+#. Default: "Aanmelden/afmelden voor e-maillijst"
+#: ../views/manage_subscribers.pt:12
+msgid "heading_subscribe_unsubscribe"
+msgstr "Aanmelden/afmelden voor e-maillijst"
+
+#: ../configure.zcml:27
+msgid "medialog.imprintnewsletter"
+msgstr ""
+
+#: ../configure.zcml:36
+msgid "medialog.imprintnewsletter (uninstall)"
+msgstr ""
+
+#. Default: "Sent to  $email"
+#: ../views/send_news_letter_view.py:203
+msgid "sent_mail_message"
+msgstr "Verzonden naar $email"

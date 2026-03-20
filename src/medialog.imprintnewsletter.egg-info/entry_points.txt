@@ -1,0 +1,5 @@
+[console_scripts]
+update_locale = medialog.imprintnewsletter.locales.update:update_locale
+
+[z3c.autoinclude.plugin]
+target = plone

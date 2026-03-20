@@ -1,0 +1,115 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n" i18n:domain="medialog.imprintnewsletter" metal:use-macro="context/main_template/macros/master">
+  <body>
+    <metal:content-core fill-slot="content">
+      <metal:block define-macro="content">
+        <p class="descreet">
+          <b>News Items to include:</b>
+          <span tal:replace="context/itemcount" />
+        </p>
+
+ 
+        <div class="border-1">
+          <!-- <img src="++resource++plone-logo.svg" alt="Plone logo"/> -->
+          <!-- ${view/get_logo} -->
+
+          <a id="logo"
+            title="$(view/portal_title}"
+            tal:attributes="
+              href view/navigation_root_url;
+              title view/portal_title;
+            "
+            i18n:attributes="title"
+            i18n:domain="plone"
+          >
+            <img alt=""
+                src="plone-logo.svg"
+                tal:attributes="
+                  alt view/portal_title;
+                  title view/portal_title;
+                  src view/get_logo;
+                "
+            /></a>
+                  
+
+          <hr/>
+
+          <h1>${context/Title}</h1>
+          <!-- Titel underneath logo. “Nieuwsbrief juli 2025” (Newsletter July 2025) -->
+          <p>${context/Description}</p>
+          <!-- Intro block (text) -->
+          <div tal:replace="structure  context/text/output|None" />
+
+
+
+
+
+          <hr/>
+
+          <div tal:repeat="obj view/items|None">
+            <article>
+
+
+              <div class="newsletter_imagediv" tal:define="scales obj/@@images; 
+                    thumbnail python: scales.scale('image', width=600);">
+                <figure>
+                  <img style="margin-top:1rem; margin-bottom: 0.5rem" tal:condition="thumbnail" tal:attributes="src thumbnail/url;
+                                    width thumbnail/width;
+                                    height thumbnail/height" loading="lazy" />
+                  <figcaption style="color: #777;" tal:content="obj/image_caption" />
+                </figure>
+              </div>
+              <a href="${obj/absolute_url}" style="text-decoration: none">
+                <h3>${obj/Title}</h3>
+              </a>
+              <p class="lead documentDescription">${obj/Description}</p>
+
+              <div tal:content="structure obj/text/output|None"></div>
+              
+              <!-- Only for Proloog, show these fields -->
+              <tal:condition tal:condition="python: obj.portal_type == 'Proloog'">
+                <p tal:condition="obj/startdatum|None">
+                  <b i18n:translate="">Startdatum:</b> ${python:obj.startdatum.strftime('%d-%m-%Y')}
+                </p>
+              </tal:condition>
+
+              <a class="button btn custom-background2 white" href="${obj/absolute_url}" i18n:translate="">Lees verder…</a>
+
+            </article>
+            <hr/>
+          </div>
+
+
+          <!-- <p>Address and contact information (fixed text, maybe from control pane)</p> -->
+          <!-- Unsubscribe, only in mailer ?? -->
+          <div tal:condition="view/footer_text|None" tal:replace="structure  view/footer_text/output|None"/>  
+   
+        </div>
+
+        <div class="border-0">
+          <a class="button btn btn-secondary" href="${context/absolute_url}/@@send-news-letter" i18n:translate="">Verstuur test e-mail</a>
+          <!-- <a class="button btn btn-warning" href="${context/absolute_url}/@@send-news-letter?groupmail" i18n:translate="">Verstuur e-mail naar iedereen</a> -->
+          <a class="button btn btn-warning"
+            href="${context/absolute_url}/@@send-news-letter?groupmail"
+            i18n:translate=""
+            onclick="return confirm('Weet u zeker dat u e-mail naar iedereen wilt sturen?');">
+            Verstuur e-mail naar iedereen
+          </a>
+        </div>
+
+        <div>
+        <a href="${view/portal_url}/@@manage-subscribers" i18n:translate="">Abonnees</a>
+        </div>
+
+        <style>
+      .border-0 {border: 0; padding: 2rem 0; width: 600px;  }
+      .border-1 {border: 1px dotted silver; padding: 2rem; width: 600px; background: white}
+      .outer-wrapper {background: whitesmoke}
+      .btn-warning {float: right;}
+        </style>
+      </metal:block>
+    </metal:content-core>
+  </body>
+</html>
