@@ -384,7 +384,6 @@ class SendNewsLetterView(BrowserView):
     
 
     def send_emails(self, context, request, recipients, api_key):
-        import pdb; pdb.set_trace()
         registry = getUtility(IRegistry)
         self.mail_settings = registry.forInterface(IMailSchema, prefix="plone")
         messages = IStatusMessage(request)
@@ -394,7 +393,10 @@ class SendNewsLetterView(BrowserView):
         today_str = date.today().isoformat()
         already_sent = sent_data.get(today_str, [])
 
-        recipients_to_send = [r for r in recipients if r not in already_sent]
+        recipients_to_send = [
+            r['email'] for r in recipients
+            if r['email'] not in already_sent
+        ]
         if not recipients_to_send:
             messages.add(_("All recipients have already received the mail today."), type="info")
             return
