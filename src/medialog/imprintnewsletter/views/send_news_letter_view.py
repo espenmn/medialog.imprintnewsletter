@@ -331,6 +331,7 @@ class SendNewsLetterView(BrowserView):
 
         try:
             for recipient in recipients_to_send:
+                import pdb; pdb.set_trace()
                 msg = EmailMessage()
                 msg['Subject'] = title
                 msg['From'] = formataddr((self.mail_settings.email_from_name,  newsletterfrom))
