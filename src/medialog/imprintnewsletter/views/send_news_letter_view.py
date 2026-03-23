@@ -341,7 +341,7 @@ class SendNewsLetterView(BrowserView):
                     with smtplib.SMTP(smtp_host, smtp_port) as server:
                         server.sendmail(
                             from_addr= newsletterfrom,
-                            to_addrs=[recipient],
+                            to_addrs=[recipient['email']],
                             msg=msg.as_string()
                         )
 
