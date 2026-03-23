@@ -13,6 +13,11 @@
   </record>
 
 
+  <record name="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterSettings.api_key" 
+    interface="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterSettings" field="api_key">
+  </record>
+
+
 
 
 </registry>

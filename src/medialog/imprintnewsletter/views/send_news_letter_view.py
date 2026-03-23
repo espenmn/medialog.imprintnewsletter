@@ -38,6 +38,9 @@ from medialog.imprintnewsletter import _
 from medialog.imprintnewsletter.interfaces import IMedialogImprintNewsletterSettings
 from medialog.imprintnewsletter.utils import get_subscriber_emails
 from medialog.imprintnewsletter.views.news_letter_view import NewsLetterView
+import requests
+
+
 
 _ = MessageFactory("plone")
 
@@ -59,6 +62,8 @@ class SendNewsLetterView(BrowserView):
             self.send_testmail() 
         # return self.index()
         # return self.request.response.redirect(self.context.absolute_url())
+        
+        
     
     @property
     def footer_text(self):
@@ -142,6 +147,7 @@ class SendNewsLetterView(BrowserView):
     def send_groupmail(self):
         context = self.context
         request = self.request
+        api_key =  api.portal.get_registry_record('api_key', interface=IMedialogImprintNewsletterSettings)
         # To do: get users from somewhere
         # Currently, it is sending to 'everybody/all_users'
         if hasattr(context, 'group'):
@@ -155,7 +161,10 @@ class SendNewsLetterView(BrowserView):
                 # fullname = member.getProperty('fullname')
                 mail_list.append(recipient) 
                 # self.send_emails(context, request, recipient, fullname)
-            self.send_emails(context, request, mail_list)
+            if api_key:
+                self.send_emails(context, request, mail_list, api_key)
+            else: 
+                self.send_emails_locally(context, request, mail_list)
 
         else:
             # alternatively, send to all users on site as well
@@ -286,9 +295,9 @@ class SendNewsLetterView(BrowserView):
          
 
 
-
+    # Old code  for 'own mail server'
     # Send group mail
-    def send_emails(self, context, request, recipients):
+    def send_emails_locally(self, context, request, recipients):
         registry = getUtility(IRegistry)
         self.mail_settings = registry.forInterface(IMailSchema, prefix="plone")
         #  mailhost = getToolByName(aq_inner(self.context), "MailHost")
@@ -352,6 +361,8 @@ class SendNewsLetterView(BrowserView):
                 # sent_data[today_str] = already_sent
                 # annotations[SENT_KEY] = sent_data
                 # context._p_changed = True  # mark as modified for persistence
+                
+                #https://www.smtpeter.com
 
 
         except Exception as e:
@@ -361,30 +372,102 @@ class SendNewsLetterView(BrowserView):
                 mapping={'error': str(e)}),
                 type="warning"
             )
+    
+
+    def send_emails(self, context, request, recipients, api_key):
+        registry = getUtility(IRegistry)
+        self.mail_settings = registry.forInterface(IMailSchema, prefix="plone")
+
+        messages = IStatusMessage(request)
+
+        annotations = IAnnotations(context)
+        SENT_KEY = "sent_data"
+
+        sent_data = annotations.get(SENT_KEY, {})
+        today_str = date.today().isoformat()
+        already_sent = sent_data.get(today_str, [])
+
+        recipients_to_send = [r for r in recipients if r not in already_sent]
+        if not recipients_to_send:
+            messages.add(_("All recipients have already received the mail today."), type="info")
+            return
+
+        title = context.Title()
+        message = self.construct_message()
+
+        newsletterfrom = api.portal.get_registry_record(
+            'newsletter_from',
+            interface=IMedialogImprintNewsletterSettings
+        )
+
+        # 🔑 SMTPeter config
+        # api_key = "YOUR_API_KEY"
+        api_url = "https://api.smtpeter.com/v1/send"
+
+        try:
+            for recipient in recipients_to_send:
+                msg = EmailMessage()
+                msg['Subject'] = title
+                msg['From'] = formataddr((self.mail_settings.email_from_name, newsletterfrom))
+                msg['To'] = recipient
+                msg.add_alternative(message, subtype='html')
+
+                # Convert to MIME string
+                mime_message = msg.as_string()
+
+                # 🚀 Send via SMTPeter REST API
+                response = requests.post(
+                    api_url,
+                    headers={
+                        "Authorization": f"Bearer {api_key}",
+                        "Content-Type": "message/rfc822"
+                    },
+                    data=mime_message
+                )
+
+                if response.status_code != 200:
+                    raise Exception(f"SMTPeter error: {response.text}")
+
+                # Update sent record
+                already_sent.append(recipient)
+                sent_data[today_str] = already_sent
+                annotations[SENT_KEY] = sent_data
+                context._p_changed = True
+                transaction.commit()
+
+                messages.add(
+                    _("sent_mail_message",
+                    default=u"Sent to $email",
+                    mapping={'email': recipient}),
+                    type="info"
+                )
+
+        except Exception as e:
+            messages.add(str(e), type="error")
 
 
-    def send_testmail(self):
-        context = self.context
-        request = self.request
-        member = api.user.get_current()
-        recipient = member.getProperty('email')
-        fullname = member.getProperty('fullname')
-        if recipient:
-            # self.send_with_brevo(context, request, recipient, fullname)
-            self.send_email(context, request, recipient, fullname)
-        else:
-            messages = IStatusMessage(self.request)
-            messages.add(_("cant_send_mail_message",
-                                                 default=u"User does not have email",
-                                                 mapping={'email': recipient },
-                                                 ),
-                                                 type="error")
+        def send_testmail(self):
+            context = self.context
+            request = self.request
+            member = api.user.get_current()
+            recipient = member.getProperty('email')
+            fullname = member.getProperty('fullname')
+            if recipient:
+                # self.send_with_brevo(context, request, recipient, fullname)
+                self.send_email(context, request, recipient, fullname)
+            else:
+                messages = IStatusMessage(self.request)
+                messages.add(_("cant_send_mail_message",
+                                                    default=u"User does not have email",
+                                                    mapping={'email': recipient },
+                                                    ),
+                                                    type="error")
+                
+            self.request.response.redirect(self.context.absolute_url())
             
-        self.request.response.redirect(self.context.absolute_url())
-        
-        
-        
-        
+            
+            
+            
     # #Use brevo api to send email
     # def send_with_brevo(self, context, request, recipient, fullname): 
     #     # Configure API key authorization: api-key
