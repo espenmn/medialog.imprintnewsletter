@@ -330,6 +330,7 @@ class SendNewsLetterView(BrowserView):
         newsletterfrom =  api.portal.get_registry_record('newsletter_from', interface=IMedialogImprintNewsletterSettings)
 
         try:
+            
             for recipient in recipients_to_send:
                 msg = EmailMessage()
                 msg['Subject'] = title
@@ -353,12 +354,17 @@ class SendNewsLetterView(BrowserView):
                     context._p_changed = True  # mark as modified for persistence
                     transaction.commit()
                 
-                    # Add message to user UI
-                    messages.add(
+                    # # Add message to user UI
+                    # messages.add(
+                    #     _("sent_mail_message",
+                    #     default=u"Sent to $email",
+                    #     mapping={'email': recipient}),
+                    #     type="info"
+                    # )
+            messages.add(
                         _("sent_mail_message",
-                        default=u"Sent to $email",
-                        mapping={'email': recipient}),
-                        type="info"
+                        default=u"Sent to all",
+                        type="info")
                     )
                 
                 # sent_data[today_str] = already_sent
@@ -380,12 +386,9 @@ class SendNewsLetterView(BrowserView):
     def send_emails(self, context, request, recipients, api_key):
         registry = getUtility(IRegistry)
         self.mail_settings = registry.forInterface(IMailSchema, prefix="plone")
-
         messages = IStatusMessage(request)
-
         annotations = IAnnotations(context)
-        SENT_KEY = "sent_data"
-
+        SENT_KEY = "sent_data"         
         sent_data = annotations.get(SENT_KEY, {})
         today_str = date.today().isoformat()
         already_sent = sent_data.get(today_str, [])
@@ -396,48 +399,46 @@ class SendNewsLetterView(BrowserView):
             return
 
         title = context.Title()
-        message = self.construct_message()
+        html_message = self.construct_message()
 
         newsletterfrom = api.portal.get_registry_record(
             'newsletter_from',
             interface=IMedialogImprintNewsletterSettings
         )
 
-        # 🔑 SMTPeter config
-        # api_key = "YOUR_API_KEY"
-        api_url = "https://api.smtpeter.com/v1/send"
+        api_url = f"https://www.smtpeter.com/v1/send?access_token={api_key}"
 
         try:
+            payload = {
+                "from": newsletterfrom,
+                "to": newsletterfrom,  # visible header (safe default)
+                "subject": title,
+                "html": html_message,
+                "text": "This email requires HTML support",
+                "recipients": recipients_to_send  # 🔥 all recipients here
+            }
+
+            response = requests.post(
+                api_url,
+                json=payload,
+                headers={"Content-Type": "application/json"}
+            )
+
+            if response.status_code not in (200, 201, 202):
+                raise Exception(f"SMTPeter error: {response.text}")
+
+            result = response.json()
+
+            # ✅ mark all as sent
+            already_sent.extend(recipients_to_send)
+
+            sent_data[today_str] = already_sent
+            annotations[SENT_KEY] = sent_data
+            context._p_changed = True
+            transaction.commit()
+
+            # UI messages
             for recipient in recipients_to_send:
-                msg = EmailMessage()
-                msg['Subject'] = title
-                msg['From'] = formataddr((self.mail_settings.email_from_name, newsletterfrom))
-                msg['To'] = recipient['email']
-                msg.add_alternative(message, subtype='html')
-
-                # Convert to MIME string
-                mime_message = msg.as_string()
-
-                # 🚀 Send via SMTPeter REST API
-                response = requests.post(
-                    api_url,
-                    headers={
-                        "Authorization": f"Bearer {api_key}",
-                        "Content-Type": "message/rfc822"
-                    },
-                    data=mime_message
-                )
-
-                if response.status_code != 200:
-                    raise Exception(f"SMTPeter error: {response.text}")
-
-                # Update sent record
-                already_sent.append(recipient)
-                sent_data[today_str] = already_sent
-                annotations[SENT_KEY] = sent_data
-                context._p_changed = True
-                transaction.commit()
-
                 messages.add(
                     _("sent_mail_message",
                     default=u"Sent to $email",
@@ -447,6 +448,7 @@ class SendNewsLetterView(BrowserView):
 
         except Exception as e:
             messages.add(str(e), type="error")
+ 
 
 
     def send_testmail(self):
