@@ -34,7 +34,7 @@ setup(
     keywords='Python Plone CMS',
     author='Espen Moe-Nilssen',
     author_email='espen@medialog.no',
-    url='https://github.com/collective/medialog.imprintnewsletter',
+    url='https://github.com/espenmn/medialog.imprintnewsletter',
     project_urls={
         'PyPI': 'https://pypi.python.org/pypi/medialog.imprintnewsletter',
         'Source': 'https://github.com/collective/medialog.imprintnewsletter',

@@ -1,0 +1,4 @@
+src/medialog/imprintnewsletter/__pycache__/interfaces.cpython-313.pyc
+src/medialog/imprintnewsletter/views/__pycache__/manage_subscribers.cpython-313.pyc
+*.pyc
+*/*pyc

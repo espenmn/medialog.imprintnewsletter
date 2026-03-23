@@ -51,7 +51,8 @@ class IMedialogImprintNewsletterSettings(model.Schema):
         fields=[
             'footer_text',
             'disclaimer_text',
-            'newsletter_from'
+            'newsletter_from',
+            'api_key'
             ],
         )
     
