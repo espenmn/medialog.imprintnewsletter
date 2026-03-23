@@ -318,7 +318,10 @@ class SendNewsLetterView(BrowserView):
         already_sent = sent_data.get(today_str, [])
 
         # Filter recipients
-        recipients_to_send = [r for r in recipients if r not in already_sent]
+        recipients_to_send = [
+            r['email'] for r in recipients
+            if r['email'] not in already_sent
+        ]
         if not recipients_to_send:
             messages.add(_("All recipients have already received the mail today."), type="info")
             return
@@ -334,7 +337,7 @@ class SendNewsLetterView(BrowserView):
             for recipient in recipients_to_send:
                 msg = EmailMessage()
                 msg['Subject'] = title
-                msg['From'] = formataddr((self.mail_settings.email_from_name,  newsletterfrom))
+                msg['From'] = formataddr((self.mail_settings.email_from_name, newsletterfrom))
                 msg['To'] = formataddr((recipient['email'], recipient['email']))
                 msg.add_alternative(message, subtype='html')                
                 
