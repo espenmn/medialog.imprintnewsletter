@@ -446,7 +446,7 @@ class SendNewsLetterView(BrowserView):
             messages.add(str(e), type="error")
 
 
-        def send_testmail(self):
+    def send_testmail(self):
             context = self.context
             request = self.request
             member = api.user.get_current()
