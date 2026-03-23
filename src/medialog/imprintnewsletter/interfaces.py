@@ -75,7 +75,7 @@ class IMedialogImprintNewsletterSettings(model.Schema):
     
     api_key = schema.TextLine(
         title="SMPETER API KEY",
-        required=True,
+        required=False,
     )
 
 alsoProvides(IMedialogImprintNewsletterSettings, IMedialogControlpanelSettingsProvider)
