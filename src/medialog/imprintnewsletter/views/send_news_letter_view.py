@@ -384,6 +384,7 @@ class SendNewsLetterView(BrowserView):
     
 
     def send_emails(self, context, request, recipients, api_key):
+        import pdb; pdb.set_trace()
         registry = getUtility(IRegistry)
         self.mail_settings = registry.forInterface(IMailSchema, prefix="plone")
         messages = IStatusMessage(request)
