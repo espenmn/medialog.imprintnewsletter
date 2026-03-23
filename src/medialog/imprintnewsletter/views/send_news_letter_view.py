@@ -173,7 +173,10 @@ class SendNewsLetterView(BrowserView):
             site = getSite()
             mail_list = get_subscriber_emails(site)
 
-            self.send_emails(context, request, mail_list)
+            if api_key:
+                self.send_emails(context, request, mail_list, api_key)
+            else: 
+                self.send_emails_locally(context, request, mail_list)
 
 
         self.request.response.redirect(self.context.absolute_url())
