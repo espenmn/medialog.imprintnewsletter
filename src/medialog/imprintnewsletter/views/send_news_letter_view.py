@@ -331,11 +331,10 @@ class SendNewsLetterView(BrowserView):
 
         try:
             for recipient in recipients_to_send:
-                import pdb; pdb.set_trace()
                 msg = EmailMessage()
                 msg['Subject'] = title
                 msg['From'] = formataddr((self.mail_settings.email_from_name,  newsletterfrom))
-                msg['To'] = formataddr((recipient, recipient))
+                msg['To'] = formataddr((recipient['email'], recipient['email']))
                 msg.add_alternative(message, subtype='html')                
                 
                 if not recipient in already_sent:
@@ -413,7 +412,7 @@ class SendNewsLetterView(BrowserView):
                 msg = EmailMessage()
                 msg['Subject'] = title
                 msg['From'] = formataddr((self.mail_settings.email_from_name, newsletterfrom))
-                msg['To'] = recipient
+                msg['To'] = recipient['email']
                 msg.add_alternative(message, subtype='html')
 
                 # Convert to MIME string
