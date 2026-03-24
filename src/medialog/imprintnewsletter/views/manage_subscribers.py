@@ -11,6 +11,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFPlone.utils import getSite
 from email.utils import parseaddr 
 from DateTime import DateTime
+import json
 
 import io
 # from datetime import datetime
@@ -26,7 +27,6 @@ UNSUBSCRIBERS_KEY = 'medialog.imprintnewsletter.unsubscribers'
 class IManageSubscribersView(Interface):
     """ Marker Interface for IManageSubscribersView"""
 
- 
 
 class SubscribeView(BrowserView):
     template = ViewPageTemplateFile('subscribe.pt')
@@ -49,6 +49,8 @@ class SubscribeView(BrowserView):
             return self._handle_add()
         elif 'form.unsubscribe' in self.request.form:
             return self._handle_remove()
+        elif 'form.button_deleteall' in self.request.form:
+            return self._deleteall()
         return self.template()  # Calls template, avoids recursion
     
     def is_probably_email(self, s):
@@ -68,7 +70,24 @@ class SubscribeView(BrowserView):
         if SUBSCRIBERS_KEY not in annotations:
             annotations[SUBSCRIBERS_KEY] = PersistentList()
         return annotations[SUBSCRIBERS_KEY]
+    
+    def subscribers_json(self):
+        data = []
+        if self.subscribers():
+            for s in self.subscribers():
+                data.append({
+                    "email": s.get("email"),
+                    "language": s.get("language"),
+                    "created": s.get("created").Date() if s.get("created") else "",
+            })
+        # return data
+        return json.dumps(data)
 
+    def _deleteall(self):    
+        site = getSite()
+        annotations = IAnnotations(site)
+        annotations[SUBSCRIBERS_KEY] = PersistentList()
+        return self.template()
     
     def _handle_add(self):
         email = self.request.form.get('email', '').strip().lower()

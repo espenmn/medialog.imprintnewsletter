@@ -31,6 +31,11 @@
                 </div>
                 <button class="button btn btn-primary" type="submit" name="form.subscribed" i18n:translate="button_subscribe">Aanmelden</button>
                 <button class="button btn btn-secondary" type="submit" name="form.unsubscribe" i18n:translate="button_unsubscribe">Afmelden</button>
+                <button class="button button-delete btn btn-warning" 
+                      name="form.button_deleteall"
+                      type="submit"  
+                      onclick="return confirm('Weet je zeker dat je alle abonnees wilt verwijderen? Dit kan niet ongedaan worden gemaakt.');"                      
+                      i18n:translate="button_button_deleteall">Verwijderen ALLE abonnees</button>
               </div>
               <hr/>
               <div class="form-group upload">
@@ -40,29 +45,26 @@
                 <hr/>
                 <button class="button btn btn-primary" type="submit"   name="form.button_importexcel" i18n:translate="button_importexcel">Excel import</button>
                 <button class="button btn btn-secondary" type="submit" name="form.button_exportexcel" i18n:translate="button_exportexcel">Excel export</button>
+             
+              
               </div>
+                    
             </form>
           </div>
         </div>
-        <div class="card">
+        <div class="card" tal:condition="view/subscribers_json|None">
           <div class="card-body">
             <h3 i18n:translate="heading_current_subscribers">Huidige abonnees</h3>
-            <table class="listing pat-datatables">
-              <thead>
-                <tr>
-                  <th i18n:translate="">E-mail</th>
-                  <th i18n:translate="">Taal</th>
-                  <th i18n:translate="">Aangemeld</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr tal:repeat="subscriber python: view.subscribers()">
-                  <td tal:content="python: subscriber['email']">E-mail</td>
-                  <td tal:content="python: subscriber['language']">Taal</td>
-                  <td tal:content="python: subscriber['created'].Date()">Aangemeld</td>
-                </tr>
-              </tbody>
-            </table>
+            <table class="listing pat-datatables"
+                data-pat-datatables='{
+                  "data": ${python: view.subscribers_json()},
+                  "columns": [
+                    {"data": "email", "title": "E-mail"},
+                    {"data": "language", "title": "Taal"},
+                    {"data": "created", "title": "Aangemeld"}
+                  ]
+                }'>
+          </table> 
           </div>
         </div>
 
@@ -88,12 +90,15 @@
           </div>
         </div>
 
+
+
         <style>
           .above-content-wrapper {padding-top: 2rem;}
           .border-1 { border: 1px dotted silver; padding: 2rem; background: white }
           .outer-wrapper { background: whitesmoke }
           .card { margin-top: 3rem; margin-bottom: 2rem; max-width: 45rem; }
           .form-group.upload {   margin-top: 3rem !important }
+          .button-delete  { margin-left:230px}
         </style>
 
       </metal:block>

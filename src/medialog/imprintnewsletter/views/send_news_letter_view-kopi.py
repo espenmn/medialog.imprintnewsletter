@@ -1,6 +1,13 @@
 # -*- coding: utf-8 -*-
 
+## Brevo installs
+# from __future__ import print_function
+# import time
+# import brevo_python
+# from brevo_python.rest import ApiException
+# from pprint import pprint
 
+# from medialog.imprintnewsletter import _
 from Acquisition import aq_inner
 from datetime import date
 from email import encoders
@@ -53,7 +60,9 @@ class SendNewsLetterView(BrowserView):
             self.send_groupmail()
         else:
             self.send_testmail() 
- 
+        # return self.index()
+        # return self.request.response.redirect(self.context.absolute_url())
+        
         
     
     @property
@@ -143,13 +152,15 @@ class SendNewsLetterView(BrowserView):
         # Currently, it is sending to 'everybody/all_users'
         if hasattr(context, 'group'):
             group = context.group
-            usergroup = api.user.get_users(groupname=group)            
+            usergroup = api.user.get_users(groupname=group)
+            
             mail_list = []
             for member in usergroup:
-                mail_list.append({
-                    "email": member.getProperty('email'),
-                    "language": getattr(member, "language", "en")  # fallback
-                }) 
+                group = api.group.get_groups(user=member)
+                recipient = member.getProperty('email')
+                # fullname = member.getProperty('fullname')
+                mail_list.append(recipient) 
+                # self.send_emails(context, request, recipient, fullname)
             if api_key:
                 self.send_emails(context, request, mail_list, api_key)
             else: 
@@ -261,6 +272,13 @@ class SendNewsLetterView(BrowserView):
             # # Finally send mail.
             mailhost.send(outer.as_string())              
             
+            # if we want 'not html we can use api portal
+            # api.portal.send_email(
+            #     recipient = formataddr((fullname, recipient)),
+            #     sender = formataddr((self.mail_settings.email_from_name, self.mail_settings.email_from_address)),         
+            #     subject = title, 
+            #     body = message
+            # )                       
 
             messages.add(_("sent_mail_message",  default=u"Sent to  $email",
                                                  mapping={'email': recipient },
@@ -285,13 +303,33 @@ class SendNewsLetterView(BrowserView):
     def send_emails_locally(self, context, request, recipients):
         registry = getUtility(IRegistry)
         self.mail_settings = registry.forInterface(IMailSchema, prefix="plone")
+        #  mailhost = getToolByName(aq_inner(self.context), "MailHost")
         mailhost = getToolByName(context, "MailHost")
         messages = IStatusMessage(request)
 
-        annotations, sent_data, today_str, already_sent = self._get_sent_state(context)
+        annotations = IAnnotations(context)
+        SENT_KEY = "sent_data"
 
-        recipients_to_send = self._get_recipients_to_send(context, recipients, already_sent)
+        # Load sent data
+        sent_data = annotations.get(SENT_KEY, {})
+        today_str = date.today().isoformat()
 
+        # Get already sent list for today
+        already_sent = sent_data.get(today_str, [])
+
+        # Filter recipients
+        newsletter_language = context.newsletter_language 
+        recipients_to_send = [
+            r['email'] for r in recipients
+            if (
+                r['email'] not in already_sent
+                and (
+                    newsletter_language == "all"
+                    or r['language'] == newsletter_language
+                )
+            )
+        ]
+        
         if not recipients_to_send:
             messages.add(_("All recipients have already received the mail today."), type="info")
             return
@@ -300,54 +338,79 @@ class SendNewsLetterView(BrowserView):
         message = self.construct_message()
         smtp_host = self.mail_settings.smtp_host
         smtp_port = self.mail_settings.smtp_port
-
-        newsletterfrom = api.portal.get_registry_record(
-            'newsletter_from',
-            interface=IMedialogImprintNewsletterSettings
-        )
-
-        sent_emails = []
+        newsletterfrom =  api.portal.get_registry_record('newsletter_from', interface=IMedialogImprintNewsletterSettings)
 
         try:
-            for r in recipients_to_send:
+            sent_to = 0
+            for recipient in recipients_to_send:
                 msg = EmailMessage()
                 msg['Subject'] = title
                 msg['From'] = formataddr((self.mail_settings.email_from_name, newsletterfrom))
-                msg['To'] = r["email"]
-                msg.add_alternative(message, subtype='html')
+                msg['To'] = formataddr((recipient['email'], recipient['email']))
+                msg.add_alternative(message, subtype='html')                
+                
+                if not recipient in already_sent:
+                    sent_to += 1
+                    with smtplib.SMTP(smtp_host, smtp_port) as server:
+                        server.sendmail(
+                            from_addr= newsletterfrom,
+                            to_addrs=[recipient['email']],
+                            msg=msg.as_string()
+                        )
 
-                with smtplib.SMTP(smtp_host, smtp_port) as server:
-                    server.sendmail(
-                        from_addr=newsletterfrom,
-                        to_addrs=[r["email"]],
-                        msg=msg.as_string()
-                    )
-
-                sent_emails.append(r["email"])
-
-            self._mark_as_sent(context, annotations, sent_data, today_str, already_sent, sent_emails)
-
+                    # Update sent record
+                    already_sent.append(recipient)
+                    # Save sent data back to annotations
+                    sent_data[today_str] = already_sent
+                    annotations[SENT_KEY] = sent_data
+                    context._p_changed = True  # mark as modified for persistence
+                    transaction.commit()
+                
+ 
+            messages.add(f"Sent to {sent_to}.", type="info")
             messages.add(
-                _("sent_to_message", default="Sent to ${count}.", mapping={"count": len(sent_emails)}),
+                _("sent_to_message", default="Sent to ${sent_to}.", mapping={"sent_to": sent_to}),
                 type="info"
             )
+ 
 
         except Exception as e:
             messages.add(
                 _("cant_send_mail_message",
-                default=u"Could not send: ${error}",
+                default=u"Could not send to all: ${error}",
                 mapping={'error': str(e)}),
                 type="warning"
             )
     
 
     def send_emails(self, context, request, recipients, api_key):
+        registry = getUtility(IRegistry)
+        self.mail_settings = registry.forInterface(IMailSchema, prefix="plone")
         messages = IStatusMessage(request)
-
-        annotations, sent_data, today_str, already_sent = self._get_sent_state(context)
-
-        recipients_to_send = self._get_recipients_to_send(context, recipients, already_sent)
-
+        annotations = IAnnotations(context)
+        SENT_KEY = "sent_data"         
+        sent_data = annotations.get(SENT_KEY, {})
+        today_str = date.today().isoformat()
+        already_sent = sent_data.get(today_str, [])
+        
+        newsletter_language = context.newsletter_language 
+        recipients_to_send = [
+            r['email'] for r in recipients
+            if (
+                r['email'] not in already_sent
+                and (
+                    newsletter_language == "all"
+                    or r['language'] == newsletter_language
+                )
+            )
+        ]
+        
+        # recipients_to_send = [
+        #     r['email'] for r in recipients
+        #     if r['email'] not in already_sent
+        # ]
+        
+        values=("all", "nl", "en", "fr", "de"),
         if not recipients_to_send:
             messages.add(_("All recipients have already received the mail today."), type="info")
             return
@@ -365,28 +428,47 @@ class SendNewsLetterView(BrowserView):
         try:
             payload = {
                 "from": newsletterfrom,
-                "to": newsletterfrom,
+                "to": newsletterfrom,  # visible header (safe default)
                 "subject": title,
                 "html": html_message,
                 "text": "This email requires HTML support",
-                "recipients": [r["email"] for r in recipients_to_send]
+                "recipients": recipients_to_send  # 🔥 all recipients here
             }
 
-            response = requests.post(api_url, json=payload)
+            response = requests.post(
+                api_url,
+                json=payload,
+                headers={"Content-Type": "application/json"}
+            )
 
             if response.status_code not in (200, 201, 202):
-                raise Exception(response.text)
+                raise Exception(f"SMTPeter error: {response.text}")
 
-            sent_emails = [r["email"] for r in recipients_to_send]
+            result = response.json()
 
-            self._mark_as_sent(context, annotations, sent_data, today_str, already_sent, sent_emails)
+            # ✅ mark all as sent
+            already_sent.extend(recipients_to_send)
 
+            sent_data[today_str] = already_sent
+            annotations[SENT_KEY] = sent_data
+            context._p_changed = True
+            transaction.commit()
+
+            # UI messages
+            # for recipient in recipients_to_send:
+            #     messages.add(
+            #         _("sent_mail_message",
+            #         default=u"Sent to $email",
+            #         mapping={'email': recipient}),
+            #         type="info"
+            #     )
+            
             messages.add(
-                _("sent_mail_message",
-                default=u"Sent to: $emails",
-                mapping={'emails': ", ".join(sent_emails)}),
-                type="info"
-            )
+                    _("sent_mail_message",
+                    default=u"Sent to: $emails",
+                    mapping={'emails': recipients_to_send}),
+                    type="info"
+                )
 
         except Exception as e:
             messages.add(str(e), type="error")
@@ -413,38 +495,87 @@ class SendNewsLetterView(BrowserView):
             self.request.response.redirect(self.context.absolute_url())
             
             
-             
-             
-    def _get_sent_state(self, context):
-        annotations = IAnnotations(context)
-        SENT_KEY = "sent_data"
+            
+            
+    # #Use brevo api to send email
+    # def send_with_brevo(self, context, request, recipient, fullname): 
+    #     # Configure API key authorization: api-key
+    #     configuration = brevo_python.Configuration()
+    #     configuration.api_key['api-key'] = API_KEY
+    #     # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+    #     # configuration.api_key_prefix['api-key'] = 'Bearer'
+    #     # Configure API key authorization: partner-key
+    #     # configuration = brevo_python.Configuration()
+    #     # configuration.api_key['partner-key'] = API_KEY
+    #     # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+    #     # configuration.api_key_prefix['partner-key'] = 'Bearer'
+        
+    #     ##  Message users with info
+    #     messages = IStatusMessage(self.request)
 
-        sent_data = annotations.get(SENT_KEY, {})
-        today_str = date.today().isoformat()
-        already_sent = sent_data.get(today_str, [])
+    #     # create an instance of the API class
+    #     api_instance = brevo_python.TransactionalEmailsApi(brevo_python.ApiClient(configuration))
+    #     # subject = context.Title()
+    #     subject = 'From Brevo'
+    #     sender = {"name":"Brevo","email":"contact@brrevo.com"}
+    #     replyTo = {"name":"Brevo","email":"contact@brevo.com"}
+    #     html_content = self.construct_message()
+    #     # To do, use user id and email 
+    #     # outer['To'] = recipient
+    #     to = [{"email":recipient,"name":fullname}]
+    #     cc = [{"email":"post@medialog.no","name":"Grieg Medialog"}]
+    #     bcc = [{"email":"post@medialog.no","name":"Grieg Medialog"}]
+        
+    #     # Not sure what this is for
+    #     # params = {"parameter":"My param value","subject":"New Subject"}                    
+    #     #Not sure if we need headers
+    #     #headers=headers, 
+        
+    #     send_smtp_email = brevo_python.SendSmtpEmail(to=to, bcc=bcc, cc=cc, reply_to=replyTo,
+    #                            html_content=html_content, sender=sender, subject=subject) # SendSmtpEmail | Values to send a transactional email
 
-        return annotations, sent_data, today_str, already_sent
+    #     try:
+    #         # Send a transactional email
+    #         api_response = api_instance.send_transac_email(send_smtp_email)
+    #         # print to test if it works
+    #         pprint(api_response)
+    #         # give feedback to Plone
+    #         # To Do
+    #     except ApiException as e:
+    #         print("Exception when calling TransactionalEmailsApi->send_transac_email: %s\n" % e)
+            
+            
 
 
-    def _mark_as_sent(self, context, annotations, sent_data, today_str, already_sent, new_emails):
-        already_sent.extend(new_emails)
-        sent_data[today_str] = already_sent
-        annotations["sent_data"] = sent_data
-        context._p_changed = True
-        transaction.commit()
 
 
-    def _get_recipients_to_send(self, context, recipients, already_sent):
-        newsletter_language = getattr(context, "newsletter_language", "all")
 
-        return [
-            r for r in recipients
-            if (
-                r.get("email")
-                and r["email"] not in already_sent
-                and (
-                    newsletter_language == "all"
-                    or r.get("language") == newsletter_language
-                )
-            )
-        ]
+
+
+
+###########################################
+
+# Update contact
+# configuration = sib_api_v3_sdk.Configuration()
+# configuration.api_key['api-key'] = 'YOUR_API_KEY'
+# api_instance = sib_api_v3_sdk.ContactsApi(sib_api_v3_sdk.ApiClient(configuration))
+
+
+# create_contact = sib_api_v3_sdk.CreateContact(email="example@example.com", update_enabled = True , attributes= {'FNAME': 'JON', 'LNAME':'DOE'} ,  list_ids=[1])
+
+# try:
+#     api_response = api_instance.create_contact(create_contact)
+#     print(api_response)
+# except ApiException as e:
+#     print("Exception when calling ContactsApi->create_contact: %s\n" % e)
+
+
+
+# our SMTP Settings
+# SMTP Server
+# smtp-relay.brevo.com
+# Port
+# 587
+# Login
+# xxxxxx@smtp-brevo.com
+# xxxx = fredag 4 juni skjermbilde

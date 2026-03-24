@@ -20,7 +20,12 @@ class INewsLetter(model.Schema):
     """
    
     # model.load('news_letter.xml')
- 
+    newsletter_language = schema.Choice(
+        title="Newsletter language",
+        values=("all", "nl", "en", "fr", "de"),
+        required=True,
+    )
+    
     text = RichText(
         title=_(u'Text'),
         required=False
@@ -42,6 +47,8 @@ class INewsLetter(model.Schema):
             source=CatalogSource(portal_type=("News Item", "Document", "Proloog"))
         )
     )
+    
+    
 
     # url = schema.URI(
     #     title=_(u'Link'),
