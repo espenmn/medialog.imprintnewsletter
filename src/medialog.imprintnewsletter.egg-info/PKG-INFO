@@ -2,7 +2,7 @@ Metadata-Version: 2.4
 Name: medialog.imprintnewsletter
 Version: 1.0a1
 Summary: Send Newsletters from Plone
-Home-page: https://github.com/collective/medialog.imprintnewsletter
+Home-page: https://github.com/espenmn/medialog.imprintnewsletter
 Author: Espen Moe-Nilssen
 Author-email: espen@medialog.no
 License: GPL version 2

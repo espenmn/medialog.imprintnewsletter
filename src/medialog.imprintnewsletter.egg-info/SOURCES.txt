@@ -64,11 +64,13 @@ src/medialog/imprintnewsletter/tests/robot/test_example.robot
 src/medialog/imprintnewsletter/views/__init__.py
 src/medialog/imprintnewsletter/views/configure.zcml
 src/medialog/imprintnewsletter/views/emaillist.py
+src/medialog/imprintnewsletter/views/manage_subscribers-kopi 2.py
 src/medialog/imprintnewsletter/views/manage_subscribers-kopi.py
 src/medialog/imprintnewsletter/views/manage_subscribers.pt
 src/medialog/imprintnewsletter/views/manage_subscribers.py
 src/medialog/imprintnewsletter/views/news_letter_view.pt
 src/medialog/imprintnewsletter/views/news_letter_view.py
+src/medialog/imprintnewsletter/views/send_news_letter_view-kopi.py
 src/medialog/imprintnewsletter/views/send_news_letter_view.pt
 src/medialog/imprintnewsletter/views/send_news_letter_view.py
 src/medialog/imprintnewsletter/views/subscribe.pt

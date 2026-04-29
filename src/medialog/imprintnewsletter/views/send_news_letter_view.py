@@ -204,8 +204,8 @@ class SendNewsLetterView(BrowserView):
                 color: #D62265 !important;
                 padding-bottom: 0.5em;
                 margin-bottom: 1em;
-                font-weight: 200 !important;">{obj.Description()}</p>
-                <div>{obj.text.output if obj.text else ''}</div>"""
+                font-weight: 200 !important;">{obj.Description()}</p>"""
+                # <div>{obj.text.output if obj.text else ''}</div>"""
                 
             if obj.portal_type == 'Proloog':
                 html_output += f"""

@@ -43,9 +43,6 @@
           <div tal:replace="structure  context/text/output|None" />
 
 
-
-
-
           <hr/>
 
           <div tal:repeat="obj view/items|None">
@@ -66,7 +63,7 @@
               </a>
               <p class="lead documentDescription">${obj/Description}</p>
 
-              <div tal:content="structure obj/text/output|None"></div>
+              <!-- <div tal:content="structure obj/text/output|None"></div> -->
               
               <!-- Only for Proloog, show these fields -->
               <tal:condition tal:condition="python: obj.portal_type == 'Proloog'">
