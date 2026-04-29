@@ -18,5 +18,14 @@
     interface="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterSettings" field="api_key">
   </record>
 
+  <record name="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterSettings.image_width" 
+    interface="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterSettings" field="image_width">
+  </record>
+
+  <record name="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterSettings.image_height" 
+    interface="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterSettings" field="image_height">
+  </record>
+
+
 </registry>
 

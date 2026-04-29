@@ -52,7 +52,9 @@ class IMedialogImprintNewsletterSettings(model.Schema):
             'footer_text',
             'disclaimer_text',
             'newsletter_from',
-            'api_key'
+            'api_key',
+            'image_width',
+            'image_height'
             ],
         )
     
@@ -76,6 +78,18 @@ class IMedialogImprintNewsletterSettings(model.Schema):
     api_key = schema.TextLine(
         title="SMPETER API KEY",
         required=False,
+    )
+    
+    image_width = schema.Int(
+        title="Max Image width in newsletter mail",
+        required=True,
+        default=600,
+    )
+    
+    image_height = schema.Int(
+        title="Max Image height in newsletter mail",
+        required=True,
+        default=400,
     )
 
 alsoProvides(IMedialogImprintNewsletterSettings, IMedialogControlpanelSettingsProvider)
