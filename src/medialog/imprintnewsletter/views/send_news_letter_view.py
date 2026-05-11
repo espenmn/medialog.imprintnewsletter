@@ -111,7 +111,7 @@ class SendNewsLetterView(BrowserView):
                                     style="max-width: 600px; height: auto"
                                 />
                             </a>
-                            <!-- div style="color: #555; padding: 2rem 0; margin: 2rem 0;"><hr/></div-->
+                            <div style="color: silver; padding: 0.5rem 0; margin: 0.5rem 0;"><hr style="border: 1px dotted silver;"></div>
                             <h1 style="color: #c92a37; 
                                 font-weight: 400 !important;
                                 font-size: 34px; margin-top: 0;">
