@@ -143,7 +143,364 @@ class SendNewsLetterView(BrowserView):
                 <div style="max-width: 600px; width: 600px; margin: 10px auto; background-color: #f4f4f4;">
                     {disclaimer_text} 
                 </div>
-                </td></tr></table></body>               
+                </td></tr></table>
+                
+                
+                  <table role="presentation" width="640px" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+                        <tr>
+                            <td align="center" style="padding: 20px;">
+                        <div style="max-width: 600px; margin: 20px auto; 
+                            background-color: #ffffff; padding: 20px; 
+                            font-size: 15px; line-height: 1.6; color: #333;">    
+                            <a id="logo" title="Imparts" href="https://imparts.nl" style="max-width: 600px;">
+                                <img alt="Imparts" title="Imparts" src="https://imparts.nl/@@site-logo/Impart_web_logo.png" style="max-width: 600px; height: auto">
+                            </a>
+                            <div style="color: silver; background-color: #ffffff; padding: 0.5rem 0; margin: 0.5rem 0;"><hr style="border: 1px dotted silver"></div>
+                            <h1 style="color: #2b5d9f  ; 
+                                font-weight: 400 !important;
+                                font-size: 34px; margin-top: 0;
+                                line-height: 1.2">
+                                check
+                            </h1>
+                            <div style="font-style: italic; background-color: #ffffff; color: #555; margin-bottom: 20px; font-size: 20px">
+                                
+                            </div>
+                            
+                            <div style="color: #555; background-color: #ffffff; padding: 1rem 0; margin: 1rem 0;"><hr style="border: 1px dotted silver"></div>
+                            
+                        
+                
+            <article style="background-color: #ffffff;">
+                
+                <div style="padding: 0; margin: 0.5rem 0; background-color: #ffffff">
+                    <figure style="padding: 0; margin:0">
+                        <img style="margin: 1rem 0 0.5rem" src="https://imparts.nl/nieuws/de-klassiekerwereld-verandert-wat-onderzoek-en-onze-eigen-balie-laten-zien/@@images/image-600-38e599b960eae7a222079e54fb632eb0.jpeg" width="400" height="400">
+                        <figcaption style="color: #777;"></figcaption>
+                    </figure>
+                </div>
+                
+                <a href="https://imparts.nl/nieuws/de-klassiekerwereld-verandert-wat-onderzoek-en-onze-eigen-balie-laten-zien" style="text-decoration: none">
+                    <h3 style="color: #DB002F ; margin-top: 0.8rem; margin-bottom: 0.15rem; line-height: 1.2;font-size: 30px; font-weight: 300;">De klassiekerwereld verandert</h3>
+                </a>
+                <p class="lead documentDescription" style="font-size: 18px; border-bottom: 1px solid #0095CA !important;
+                color:  #2b5d9f !important;
+                padding-bottom: 0.5em;
+                margin-bottom: 1em;
+                font-weight: 200 !important;">Onderzoek uit Engeland, signalen uit Europa en wat wij dagelijks in Ede zien aan de balie, laten hetzelfde beeld zien: de belangstelling verschuift, maar het erfgoed blijft stevig overeind. De markt verandert, maar niet op de manier die vaak wordt gedacht.</p>   
+                <a href="https://imparts.nl/nieuws/de-klassiekerwereld-verandert-wat-onderzoek-en-onze-eigen-balie-laten-zien" style="color: #fff; background-color: #DB002F;  
+                   border: 1px solid #c92a37; padding: 0.55rem 1rem; 
+                   font-size: 1.2rem; line-height: 1.75; 
+                   text-decoration: none !important;
+                   border-radius: 0.175rem">Lees verder</a>
+            </article>
+            <div style="padding: 2rem 0; margin: 1rem 0; background-color: #ffffff;"><hr></div>
+            
+            <article style="background-color: #ffffff;">
+                
+                <div style="padding: 0; margin: 0.5rem 0; background-color: #ffffff">
+                    <figure style="padding: 0; margin:0">
+                        <img style="margin: 1rem 0 0.5rem" src="https://imparts.nl/nieuws/hoe_blijf_je_op_bedrijfstemperatuur/@@images/image-600-b95c210ad9918343b1bb37d5281b8342.jpeg" width="400" height="400">
+                        <figcaption style="color: #777;"></figcaption>
+                    </figure>
+                </div>
+                
+                <a href="https://imparts.nl/nieuws/hoe_blijf_je_op_bedrijfstemperatuur" style="text-decoration: none">
+                    <h3 style="color: #DB002F ; margin-top: 0.8rem; margin-bottom: 0.15rem; line-height: 1.2;font-size: 30px; font-weight: 300;">Hoe blijf je op bedrijfstemperatuur?</h3>
+                </a>
+                <p class="lead documentDescription" style="font-size: 18px; border-bottom: 1px solid #0095CA !important;
+                color:  #2b5d9f !important;
+                padding-bottom: 0.5em;
+                margin-bottom: 1em;
+                font-weight: 200 !important;">Met een goed koelsysteem blijft elke auto, en zeker een klassieker, betrouwbaar op bedrijfstemperatuur. Ondersteund door deskundig advies en onderdelen die precies passen bij jouw auto.</p>   
+                <a href="https://imparts.nl/nieuws/hoe_blijf_je_op_bedrijfstemperatuur" style="color: #fff; background-color: #DB002F;  
+                   border: 1px solid #c92a37; padding: 0.55rem 1rem; 
+                   font-size: 1.2rem; line-height: 1.75; 
+                   text-decoration: none !important;
+                   border-radius: 0.175rem">Lees verder</a>
+            </article>
+            <div style="padding: 2rem 0; margin: 1rem 0; background-color: #ffffff;"><hr></div>
+            
+            <article style="background-color: #ffffff;">
+                
+                <div style="padding: 0; margin: 0.5rem 0; background-color: #ffffff">
+                    <figure style="padding: 0; margin:0">
+                        <img style="margin: 1rem 0 0.5rem" src="https://imparts.nl/nieuws/wanneer-moet-je-een-benzinetank-vervangen/@@images/image-600-3ab7f7e7f258003316a55e56fc9ef73d.jpeg" width="400" height="400">
+                        <figcaption style="color: #777;"></figcaption>
+                    </figure>
+                </div>
+                
+                <a href="https://imparts.nl/nieuws/wanneer-moet-je-een-benzinetank-vervangen" style="text-decoration: none">
+                    <h3 style="color: #DB002F ; margin-top: 0.8rem; margin-bottom: 0.15rem; line-height: 1.2;font-size: 30px; font-weight: 300;">Wanneer moet je een benzinetank vervangen?</h3>
+                </a>
+                <p class="lead documentDescription" style="font-size: 18px; border-bottom: 1px solid #0095CA !important;
+                color:  #2b5d9f !important;
+                padding-bottom: 0.5em;
+                margin-bottom: 1em;
+                font-weight: 200 !important;">In oudere metalen tanks ontstaat na jaren gebruik roest, vuil en afzetting. Dat gebeurt door condens, oude brandstof of simpelweg doordat de auto langere tijd stil heeft gestaan.</p>   
+                <a href="https://imparts.nl/nieuws/wanneer-moet-je-een-benzinetank-vervangen" style="color: #fff; background-color: #DB002F;  
+                   border: 1px solid #c92a37; padding: 0.55rem 1rem; 
+                   font-size: 1.2rem; line-height: 1.75; 
+                   text-decoration: none !important;
+                   border-radius: 0.175rem">Lees verder</a>
+            </article>
+            <div style="padding: 2rem 0; margin: 1rem 0; background-color: #ffffff;"><hr></div>
+            <div>
+<div align="center">
+<table border="0" cellpadding="0" cellspacing="0" class="MsoNormalTable" width="100%">
+<thead>
+<tr>
+<td colspan="3">
+<p align="center" class="MsoNormal"><strong><span>Van harte welkom in Ede. En als dat niet uitkomt, kun je ook bestellen, bellen of WhatsAppen. <br>We helpen je direct op weg!<br><br></span></strong></p>
+</td>
+</tr>
+<tr>
+<td>
+<p align="center" class="MsoNormal">Imparts BV<br>Bonnetstraat 33<br>6718 XN Ede</p>
+</td>
+<td></td>
+<td>
+<p align="center" class="MsoNormal">Bestel: <a href="https://shop.imparts.nl/">https://shop.imparts.nl/</a><br>Bel: +31 (0)26 442 99 37<br>WhatsApp: +31 6 16 03 77 82</p>
+</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>
+<p align="center" class="MsoNormal"><a href="https://www.facebook.com/impartsnl" title='"Volg ons op Facebook voor het laatste nieuws" t '><span><img border="0" height="43" id="_x0000_i1037" src="https://imparts.nl/afbeeldingen/facebook_logo.png/@@images/image-600-4c74469f2dbdef2a29866585c2c488b0.png" width="43"></span></a></p>
+</td>
+<td></td>
+<td>
+<p align="center" class="MsoNormal"><a href="https://www.instagram.com/impartsede/" title='"Volg ons op Instagram voor het laatste nieuws" t '><span><img border="0" height="52" id="_x0000_i1036" src="https://imparts.nl/afbeeldingen/instagram_logo.png/@@images/image-600-91e0850cf1ea660167114a4652b0622f.png" width="51"></span></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div>
+<p> </p>
+</div></div>
+                <div style="max-width: 600px; margin: 10px auto; background-color: #f4f4f4;">
+                    <div></div>
+<div>
+<p><span>De informatie in deze nieuwsbrief is bedoeld voor algemene informatiedoeleinden. Imparts BV besteedt zorg aan de inhoud, maar kan niet instaan voor volledigheid of juistheid. Er kunnen geen rechten aan worden ontleend. Deze e-mail en eventuele bijlagen zijn uitsluitend bestemd voor de geadresseerde.</span></p>
+</div> 
+                </div>
+                </td></tr></table>
+                       
+            
+    
+                <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#f4f4f4">
+                <tr>
+                <td align="center" style="padding:20px 10px;">
+                
+                <!--[if (gte mso 9)|(IE)]>
+                <table width="600" align="center" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                <td>
+                <![endif]-->
+                
+                <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0"
+                       style="max-width:600px; background-color:#ffffff; border-collapse:collapse;">
+                
+                    <!-- LOGO -->
+                    <tr>
+                        <td style="padding:20px; text-align:left;">
+                            <a href="https://imparts.nl" target="_blank">
+                                <img src="https://imparts.nl/@@site-logo/Impart_web_logo.png"
+                                     alt="Imparts"
+                                     width="560"
+                                     style="display:block; width:100%; max-width:560px; height:auto; border:0;">
+                            </a>
+                        </td>
+                    </tr>
+                
+                    <!-- DIVIDER -->
+                    <tr>
+                        <td style="padding:0 20px;">
+                            <hr style="border:0; border-top:1px dotted #c0c0c0;">
+                        </td>
+                    </tr>
+                
+                    <!-- HEADER -->
+                    <tr>
+                        <td style="padding:20px;">
+                            <h1 style="margin:0; color:#2b5d9f; font-size:34px; line-height:40px; font-weight:normal;">
+                                check
+                            </h1>
+                        </td>
+                    </tr>
+                
+                    <!-- ARTICLE 1 -->
+                    <tr>
+                        <td style="padding:20px;">
+                
+                            <img src="https://imparts.nl/nieuws/de-klassiekerwereld-verandert-wat-onderzoek-en-onze-eigen-balie-laten-zien/@@images/image-600-38e599b960eae7a222079e54fb632eb0.jpeg"
+                                 alt=""
+                                 width="400"
+                                 style="display:block; width:100%; max-width:400px; height:auto; margin-bottom:20px; border:0;">
+                
+                            <h2 style="margin:0 0 10px 0; font-size:30px; line-height:36px; font-weight:normal;">
+                                <a href="https://imparts.nl/nieuws/de-klassiekerwereld-verandert-wat-onderzoek-en-onze-eigen-balie-laten-zien"
+                                   style="color:#DB002F; text-decoration:none;">
+                                    De klassiekerwereld verandert
+                                </a>
+                            </h2>
+                
+                            <p style="margin:0 0 20px 0; font-size:18px; line-height:28px; color:#2b5d9f; border-bottom:1px solid #0095CA; padding-bottom:15px;">
+                                Onderzoek uit Engeland, signalen uit Europa en wat wij dagelijks in Ede zien aan de balie,
+                                laten hetzelfde beeld zien: de belangstelling verschuift, maar het erfgoed blijft stevig overeind.
+                            </p>
+                
+                            <!-- BUTTON -->
+                            <table role="presentation" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td bgcolor="#DB002F" style="padding:12px 24px;">
+                                        <a href="https://imparts.nl/nieuws/de-klassiekerwereld-verandert-wat-onderzoek-en-onze-eigen-balie-laten-zien"
+                                           style="color:#ffffff; font-size:18px; text-decoration:none; display:inline-block;">
+                                            Lees verder
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                
+                        </td>
+                    </tr>
+                
+                    <!-- DIVIDER -->
+                    <tr>
+                        <td style="padding:0 20px;">
+                            <hr style="border:0; border-top:1px solid #dddddd;">
+                        </td>
+                    </tr>
+                
+                    <!-- ARTICLE 2 -->
+                    <tr>
+                        <td style="padding:20px;">
+                
+                            <img src="https://imparts.nl/nieuws/hoe_blijf_je_op_bedrijfstemperatuur/@@images/image-600-b95c210ad9918343b1bb37d5281b8342.jpeg"
+                                 alt=""
+                                 width="400"
+                                 style="display:block; width:100%; max-width:400px; height:auto; margin-bottom:20px; border:0;">
+                
+                            <h2 style="margin:0 0 10px 0; font-size:30px; line-height:36px; font-weight:normal;">
+                                <a href="https://imparts.nl/nieuws/hoe_blijf_je_op_bedrijfstemperatuur"
+                                   style="color:#DB002F; text-decoration:none;">
+                                    Hoe blijf je op bedrijfstemperatuur?
+                                </a>
+                            </h2>
+                
+                            <p style="margin:0 0 20px 0; font-size:18px; line-height:28px; color:#2b5d9f; border-bottom:1px solid #0095CA; padding-bottom:15px;">
+                                Met een goed koelsysteem blijft elke auto, en zeker een klassieker,
+                                betrouwbaar op bedrijfstemperatuur.
+                            </p>
+                
+                            <table role="presentation" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td bgcolor="#DB002F" style="padding:12px 24px;">
+                                        <a href="https://imparts.nl/nieuws/hoe_blijf_je_op_bedrijfstemperatuur"
+                                           style="color:#ffffff; font-size:18px; text-decoration:none; display:inline-block;">
+                                            Lees verder
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                
+                        </td>
+                    </tr>
+                
+                    <!-- FOOTER -->
+                    <tr>
+                        <td style="padding:30px 20px; text-align:center; font-size:15px; line-height:24px; color:#555555;">
+                
+                            <strong>
+                                Van harte welkom in Ede.<br>
+                                En als dat niet uitkomt, kun je ook bestellen, bellen of WhatsAppen.
+                            </strong>
+                
+                            <br><br>
+                
+                            Imparts BV<br>
+                            Bonnetstraat 33<br>
+                            6718 XN Ede
+                
+                            <br><br>
+                
+                            Bestel:
+                            <a href="https://shop.imparts.nl/" style="color:#2b5d9f;">
+                                shop.imparts.nl
+                            </a>
+                
+                            <br>
+                
+                            Bel: +31 (0)26 442 99 37<br>
+                            WhatsApp: +31 6 16 03 77 82
+                
+                            <br><br>
+                
+                            <a href="https://www.facebook.com/impartsnl">
+                                <img src="https://imparts.nl/afbeeldingen/facebook_logo.png/@@images/image-600-4c74469f2dbdef2a29866585c2c488b0.png"
+                                     width="43"
+                                     alt="Facebook"
+                                     style="border:0; display:inline-block;">
+                            </a>
+                
+                            &nbsp;&nbsp;&nbsp;
+                
+                            <a href="https://www.instagram.com/impartsede/">
+                                <img src="https://imparts.nl/afbeeldingen/instagram_logo.png/@@images/image-600-91e0850cf1ea660167114a4652b0622f.png"
+                                     width="51"
+                                     alt="Instagram"
+                                     style="border:0; display:inline-block;">
+                            </a>
+                
+                        </td>
+                    </tr>
+                
+                </table>
+                
+                <!--[if (gte mso 9)|(IE)]>
+                </td>
+                </tr>
+                </table>
+                <![endif]-->
+                
+                <!-- DISCLAIMER -->
+                <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width:600px;">
+                <tr>
+                <td style="padding:20px; font-size:12px; line-height:18px; color:#777777;">
+                    De informatie in deze nieuwsbrief is bedoeld voor algemene informatiedoeleinden.
+                    Imparts BV besteedt zorg aan de inhoud, maar kan niet instaan voor volledigheid
+                    of juistheid.
+                </td>
+                </tr>
+                </table>
+                
+                </td>
+                </tr>
+                </table>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                </body>               
                 </html>"""
         
         return transform(message)
