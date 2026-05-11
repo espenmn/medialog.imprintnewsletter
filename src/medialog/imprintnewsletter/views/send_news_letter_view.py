@@ -99,7 +99,6 @@ class SendNewsLetterView(BrowserView):
                         <div style="max-width: 600px; margin: 20px auto; 
                             background-color: #ffffff; padding: 20px; 
                             font-size: 15px; line-height: 1.6; color: #333;">    
-                            <table width="600" cellpadding="0" cellspacing="0">               
                             <a id="logo"
                                 title="{portal_title}"
                                 href="{navigation_root_url}"
@@ -129,7 +128,7 @@ class SendNewsLetterView(BrowserView):
                 """
         message += self.more_message()
         message += footer_text 
-        message +=  f"""</table></div>
+        message +=  f"""</div>
                 <div style="max-width: 600px; margin: 10px auto;">
                     {disclaimer_text} 
                 </div>                
