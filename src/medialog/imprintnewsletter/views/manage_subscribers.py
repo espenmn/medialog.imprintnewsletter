@@ -276,9 +276,10 @@ class SubscribeView(BrowserView):
             email = row[col_email]
             language = row[col_language]
             joined = row[col_joined]
-            land = row[col_land].lower()
+            
 
             if not language:
+                land = row[col_land].lower() if pd.notna(row.get(col_land)) else ''
                 lang_map = {
                     "nederland": "nl",
                     "frankrijk": "fr",
