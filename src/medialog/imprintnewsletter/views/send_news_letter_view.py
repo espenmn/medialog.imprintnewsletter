@@ -203,6 +203,7 @@ class SendNewsLetterView(BrowserView):
                 <div style="padding: 0; margin: 0.5rem 0; background-color: #ffffff">
                     <figure style="padding: 0; margin:0">
                         <img style="margin: 1rem 0 0.5rem" 
+                             alt="{obj.image_caption or ''}"
                              src="{thumbnail.url}" width="{thumbnail.width}" height="{thumbnail.height}" />
                         <figcaption style="color: #777;">{obj.image_caption or ''}</figcaption>
                     </figure>
