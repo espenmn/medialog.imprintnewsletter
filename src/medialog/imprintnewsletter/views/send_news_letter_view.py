@@ -96,9 +96,10 @@ class SendNewsLetterView(BrowserView):
             .text-break {word-wrap: break-word;	word-break: break-word;}
         </style>"""
         message  += f"""<body style="margin: 0; padding: 0; font-family: Roboto, Arial, sans-serif; background-color: #f4f4f4;">
-                        <table width="600" align="center" cellpadding="0" cellspacing="0"                         
+                        <div style="max-width: 600px; margin: 20px auto; 
                             background-color: #ffffff; padding: 20px; 
-                            font-size: 15px; line-height: 1.6; color: #333;">                   
+                            font-size: 15px; line-height: 1.6; color: #333;">    
+                            <table width="600" cellpadding="0" cellspacing="0">               
                             <a id="logo"
                                 title="{portal_title}"
                                 href="{navigation_root_url}"
@@ -123,12 +124,12 @@ class SendNewsLetterView(BrowserView):
                             </div>
                             {context.text.output if context.text else ''}
                             <div style="color: #555; padding: 1rem 0; margin: 1rem 0;"><hr style="border: 1px dotted silver"/></div>
-                                                   
+                            
                         
                 """
         message += self.more_message()
         message += footer_text 
-        message +=  f"""</table>
+        message +=  f"""</table></div>
                 <div style="max-width: 600px; margin: 10px auto;">
                     {disclaimer_text} 
                 </div>                
