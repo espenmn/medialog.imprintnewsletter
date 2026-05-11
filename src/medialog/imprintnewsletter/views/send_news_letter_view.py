@@ -130,7 +130,7 @@ class SendNewsLetterView(BrowserView):
                             </td>
                         </tr>
                         <tr style="text-align: left">
-                            <td   style="text-align: left; padding:0 20px; ">
+                            <td   style="text-align: left; padding:20px; ">
                                 <h1 style="color: #2b5d9f  ; 
                                     font-weight: 400 !important;
                                     font-size: 34px; margin-top: 0;
@@ -212,8 +212,8 @@ class SendNewsLetterView(BrowserView):
             image_html = ''
             if thumbnail:
                 image_html = f"""
-                <tr>
-                    <td style="padding-left: 20px; padding-right:20px; text-align:left; margin: 0.5rem ; background-color: #ffffff">
+                <tr style="padding-left: 20px; padding-right:20px;"> 
+                    <td style="text-align:left; margin: 0.5rem ; background-color: #ffffff">
                         <figure style="padding: 0; margin:0">
                             <img style="margin: 1rem 0 0.5rem" 
                                 alt="{obj.image_caption or ''}"
@@ -225,7 +225,7 @@ class SendNewsLetterView(BrowserView):
                 """
 
             html_output += f"""
-            <tr style="text-align:left">
+            <tr style="text-align:left" style="max-width: 600px; width: 600px;" >
             <td style="background-color: #ffffff; text-align:left; padding-left: 20px; padding-right:20px;">
                 {image_html}
                 <a href="{obj.absolute_url()}" style="text-decoration: none">
