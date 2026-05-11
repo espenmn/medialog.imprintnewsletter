@@ -100,7 +100,7 @@ class SendNewsLetterView(BrowserView):
                         role="presentation"
                         width="640px"
                         max-width="640px"
-                        cellpadding="20px"
+                        cellpadding="0"
                         cellspacing="0"
                         border="0"
                         text-align="left"
@@ -226,7 +226,7 @@ class SendNewsLetterView(BrowserView):
 
             html_output += f"""
             <tr text-align="left" style="text-align:left">
-            <td style="background-color: #ffffff;" style="text-align:left">
+            <td style="background-color: #ffffff; text-align:left" text-align="left" >
                 {image_html}
                 <a href="{obj.absolute_url()}" style="text-decoration: none">
                     <h3 style="color: #DB002F ; margin-top: 0.8rem; margin-bottom: 0.15rem; line-height: 1.2;font-size: 30px; font-weight: 300;">{obj.Title()}</h3>
