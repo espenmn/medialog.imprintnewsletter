@@ -96,6 +96,16 @@ class SendNewsLetterView(BrowserView):
             .text-break {word-wrap: break-word;	word-break: break-word;}
         </style>"""
         message  += f"""<body style="margin: 0; padding: 0; font-family: Roboto, Arial, sans-serif; background-color: #f4f4f4;">
+                     <table
+                        role="presentation"
+                        width="100%"
+                        cellpadding="0"
+                        cellspacing="0"
+                        border="0"
+                        style="border-collapse: collapse;"
+                        >
+                        <tr>
+                            <td align="center" style="padding: 20px;">
                         <div style="max-width: 600px; margin: 20px auto; 
                             background-color: #ffffff; padding: 20px; 
                             font-size: 15px; line-height: 1.6; color: #333;">    
@@ -111,27 +121,28 @@ class SendNewsLetterView(BrowserView):
                                     style="max-width: 600px; height: auto"
                                 />
                             </a>
-                            <div style="color: silver; padding: 0.5rem 0; margin: 0.5rem 0;"><hr style="border: 1px dotted silver"></div>
+                            <div style="color: silver; background-color: #ffffff; padding: 0.5rem 0; margin: 0.5rem 0;"><hr style="border: 1px dotted silver"></div>
                             <h1 style="color: #2b5d9f  ; 
                                 font-weight: 400 !important;
                                 font-size: 34px; margin-top: 0;
                                 line-height: 1.2">
                                 {title}
                             </h1>
-                            <div style="font-style: italic; color: #555; margin-bottom: 20px; font-size: 20px">
+                            <div style="font-style: italic; background-color: #ffffff; color: #555; margin-bottom: 20px; font-size: 20px">
                                 {description}
                             </div>
                             {context.text.output if context.text else ''}
-                            <div style="color: #555; padding: 1rem 0; margin: 1rem 0;"><hr style="border: 1px dotted silver"/></div>
+                            <div style="color: #555; background-color: #ffffff; padding: 1rem 0; margin: 1rem 0;"><hr style="border: 1px dotted silver"/></div>
                             
                         
                 """
         message += self.more_message()
         message += footer_text 
         message +=  f"""</div>
-                <div style="max-width: 600px; margin: 10px auto;">
+                <div style="max-width: 600px; margin: 10px auto; background-color: #f4f4f4;">
                     {disclaimer_text} 
-                </div>                
+                </div>
+                </td></tr></table></body>               
                 </html>"""
         
         return transform(message)
@@ -189,7 +200,7 @@ class SendNewsLetterView(BrowserView):
             image_html = ''
             if thumbnail:
                 image_html = f"""
-                <div style="padding: 0; margin: 0.5rem 0">
+                <div style="padding: 0; margin: 0.5rem 0; background-color: #ffffff">
                     <figure style="padding: 0; margin:0">
                         <img style="margin: 1rem 0 0.5rem" 
                              src="{thumbnail.url}" width="{thumbnail.width}" height="{thumbnail.height}" />
@@ -199,7 +210,7 @@ class SendNewsLetterView(BrowserView):
                 """
 
             html_output += f"""
-            <article>
+            <article style="background-color: #ffffff;">
                 {image_html}
                 <a href="{obj.absolute_url()}" style="text-decoration: none">
                     <h3 style="color: #DB002F ; margin-top: 0.8rem; margin-bottom: 0.15rem; line-height: 1.2;font-size: 30px; font-weight: 300;">{obj.Title()}</h3>
@@ -223,7 +234,7 @@ class SendNewsLetterView(BrowserView):
                    text-decoration: none !important;
                    border-radius: 0.175rem">Lees verder</a>
             </article>
-            <div style="padding: 2rem 0; margin: 1rem 0;"><hr/></div>
+            <div style="padding: 2rem 0; margin: 1rem 0; background-color: #ffffff;"><hr/></div>
             """
         
         return html_output
