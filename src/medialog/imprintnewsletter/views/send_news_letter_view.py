@@ -105,7 +105,7 @@ class SendNewsLetterView(BrowserView):
                         style="border-collapse: collapse;"
                         >
                         <tr>
-                            <td align="center" style="padding: 20px;">
+                            <td style="padding: 20px;">
                         <div style="max-width: 600px; margin: 20px auto; 
                             background-color: #ffffff; padding: 20px; 
                             font-size: 15px; line-height: 1.6; color: #333;">    
