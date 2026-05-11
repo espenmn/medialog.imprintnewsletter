@@ -95,7 +95,7 @@ class SendNewsLetterView(BrowserView):
             .text-nowrap {white-space: nowrap}
             .text-break {word-wrap: break-word;	word-break: break-word;}
         </style>"""
-        message  += f"""<body style="margin: 0; text-align: center; padding: 0; font-family: Roboto, Arial, sans-serif; background-color: #f4f4f4;">
+        message  += f"""<body style="margin: 0; text-align: center; padding: 20px; font-family: Roboto, Arial, sans-serif; background-color: #f4f4f4;">
                      <table
                         role="presentation"
                         width="640px"
@@ -103,7 +103,7 @@ class SendNewsLetterView(BrowserView):
                         cellpadding="0"
                         cellspacing="0"
                         border="0"
-                        
+                        text-align="left"
                         style="background-color:#ffffff; border-collapse: collapse;"
                         >
                         <tr>
@@ -125,12 +125,12 @@ class SendNewsLetterView(BrowserView):
                         </tr>
                 
                         <!-- DIVIDER -->
-                        <tr>
+                        <tr
                             <td style="padding:0 20px; ">
                                 <hr style="border:0; border-top:1px dotted #c0c0c0;">
                             </td>
                         </tr>
-                        <tr>
+                        <tr text-align:left;">
                             <td>
                                 <h1 style="color: #2b5d9f  ; 
                                     font-weight: 400 !important;
@@ -213,7 +213,7 @@ class SendNewsLetterView(BrowserView):
             image_html = ''
             if thumbnail:
                 image_html = f"""
-                <tr>
+                <tr text-align:left;">
                     <td style="padding: 0; margin: 0.5rem 0; background-color: #ffffff">
                         <figure style="padding: 0; margin:0">
                             <img style="margin: 1rem 0 0.5rem" 
@@ -226,7 +226,7 @@ class SendNewsLetterView(BrowserView):
                 """
 
             html_output += f"""
-            <tr>
+            <tr text-align:left;">
             <td style="background-color: #ffffff;">
                 {image_html}
                 <a href="{obj.absolute_url()}" style="text-decoration: none">
