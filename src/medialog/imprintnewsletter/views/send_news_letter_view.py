@@ -100,7 +100,7 @@ class SendNewsLetterView(BrowserView):
                         role="presentation"
                         width="640px"
                         max-width="640px"
-                        cellpadding="0"
+                        cellpadding="20px"
                         cellspacing="0"
                         border="0"
                          
