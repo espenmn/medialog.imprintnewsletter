@@ -277,16 +277,17 @@ class SubscribeView(BrowserView):
             language = row[col_language]
             joined = row[col_joined]
             
-
-            if not language:
-                land = row[col_land].lower() if pd.notna(row.get(col_land)) else ''
+            if not language or str(language) == 'nan':
+                land = row[col_land].lower() if pd.notna(row.get(col_land)) else "en"
                 lang_map = {
                     "nederland": "nl",
                     "frankrijk": "fr",
-                    "duitsland": "de"
+                    "duitsland": "de",
+                    "en"  : "en",
+                    "NaN" : "en"
                 }
                 language = lang_map.get(land, "en") 
-        
+                
             
             if email and self.is_probably_email(email):
                 exists = any(item.get("email") == email for item in subscribers + unsubscribers)
