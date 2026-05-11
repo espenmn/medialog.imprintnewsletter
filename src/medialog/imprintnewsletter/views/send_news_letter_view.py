@@ -107,7 +107,7 @@ class SendNewsLetterView(BrowserView):
                         style="background-color:#ffffff; border-collapse: collapse;"
                         >
                         <tr>
-                            <td style="padding: 20px  text-align:left;">
+                            <td style="padding: 20px; text-align="center";">
                                 <a id="logo"
                                     title="{portal_title}"
                                     href="{navigation_root_url}"
@@ -126,12 +126,12 @@ class SendNewsLetterView(BrowserView):
                 
                         <!-- DIVIDER -->
                         <tr
-                            <td style="padding:0 20px; ">
+                            <td style="padding:0 20px; text-align:center;">
                                 <hr style="border:0; border-top:1px dotted #c0c0c0;">
                             </td>
                         </tr>
-                        <tr text-align:left;">
-                            <td>
+                        <tr text-align="left">
+                            <td text-align="left">
                                 <h1 style="color: #2b5d9f  ; 
                                     font-weight: 400 !important;
                                     font-size: 34px; margin-top: 0;
@@ -213,8 +213,8 @@ class SendNewsLetterView(BrowserView):
             image_html = ''
             if thumbnail:
                 image_html = f"""
-                <tr text-align:left;">
-                    <td style="padding: 0; margin: 0.5rem 0; background-color: #ffffff">
+                <tr text-align="left">
+                    <td text-align="left" style="padding: 0; margin: 0.5rem 0; background-color: #ffffff">
                         <figure style="padding: 0; margin:0">
                             <img style="margin: 1rem 0 0.5rem" 
                                 alt="{obj.image_caption or ''}"
@@ -226,7 +226,7 @@ class SendNewsLetterView(BrowserView):
                 """
 
             html_output += f"""
-            <tr text-align:left;">
+            <tr text-align="left">
             <td style="background-color: #ffffff;">
                 {image_html}
                 <a href="{obj.absolute_url()}" style="text-decoration: none">
