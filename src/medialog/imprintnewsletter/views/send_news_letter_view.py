@@ -98,8 +98,8 @@ class SendNewsLetterView(BrowserView):
         message  += f"""<body style="margin: 0; padding: 0; font-family: Roboto, Arial, sans-serif; background-color: #f4f4f4;">
                      <table
                         role="presentation"
-                        width="600px"
-                        max-width="600px"
+                        width="640px"
+                        max-width="640px"
                         cellpadding="0"
                         cellspacing="0"
                         border="0"
@@ -140,7 +140,7 @@ class SendNewsLetterView(BrowserView):
         message += self.more_message()
         message += footer_text 
         message +=  f"""</div>
-                <div style="max-width: 600px; margin: 10px auto; background-color: #f4f4f4;">
+                <div style="max-width: 600px; width: 600px; margin: 10px auto; background-color: #f4f4f4;">
                     {disclaimer_text} 
                 </div>
                 </td></tr></table></body>               
