@@ -100,25 +100,24 @@ class SendNewsLetterView(BrowserView):
                         role="presentation"
                         width="640px"
                         max-width="640px"
-                        cellpadding="0"
+                        cellpadding="20px"
                         cellspacing="0"
                         border="0"
                         text-align="left"
-                        style="background-color:#ffffff; border-collapse: collapse;"
+                        style="background-color:#ffffff; border-collapse: collapse; margin: 20px auto"
                         >
                         <tr>
                             <td style="padding: 20px; text-align="center";">
                                 <a id="logo"
                                     title="{portal_title}"
                                     href="{navigation_root_url}"
-                                    title="{portal_title}"
-                                    style="max-width: 600px;"
+                                    title="{portal_title}" 
                                 >
                                     <img alt="{portal_title}"
                                         title="{portal_title}"
                                         src="{img_src}"
                                         width="260"
-                                        style="border: 0; display: block; max-width: 600px; height: auto"
+                                        style="border: 0; display: block; margin: auto; height: auto"
                                     />
                                 </a>
                             </td>
@@ -131,7 +130,7 @@ class SendNewsLetterView(BrowserView):
                             </td>
                         </tr>
                         <tr text-align="left">
-                            <td text-align="left">
+                            <td text-align="left" style="text-align: left">
                                 <h1 style="color: #2b5d9f  ; 
                                     font-weight: 400 !important;
                                     font-size: 34px; margin-top: 0;
@@ -214,7 +213,7 @@ class SendNewsLetterView(BrowserView):
             if thumbnail:
                 image_html = f"""
                 <tr text-align="left">
-                    <td text-align="left" style="padding: 0; margin: 0.5rem 0; background-color: #ffffff">
+                    <td text-align="left" style="padding: 0; margin: 0.5rem ; background-color: #ffffff">
                         <figure style="padding: 0; margin:0">
                             <img style="margin: 1rem 0 0.5rem" 
                                 alt="{obj.image_caption or ''}"
