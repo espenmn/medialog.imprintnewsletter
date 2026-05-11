@@ -112,16 +112,17 @@ class SendNewsLetterView(BrowserView):
                                 />
                             </a>
                             <div style="color: silver; padding: 0.5rem 0; margin: 0.5rem 0;"><hr style="border: 1px dotted silver;"></div>
-                            <h1 style="color: #c92a37; 
+                            <h1 style="color: #2b5d9f  ; 
                                 font-weight: 400 !important;
-                                font-size: 34px; margin-top: 0;">
+                                font-size: 34px; margin-top: 0;
+                                line-height: 1.2">
                                 {title}
                             </h1>
                             <div style="font-style: italic; color: #555; margin-bottom: 20px; font-size: 20px">
                                 {description}
                             </div>
                             {context.text.output if context.text else ''}
-                            <div style="color: #555; padding: 2rem 0; margin: 2rem 0;"><hr/></div>
+                            <div style="color: #555; padding: 1rem 0; margin: 1rem 0;"><hr style="border: 1px dotted silver;/></div>
                             
                         
                 """
@@ -201,10 +202,10 @@ class SendNewsLetterView(BrowserView):
             <article>
                 {image_html}
                 <a href="{obj.absolute_url()}" style="text-decoration: none">
-                    <h3 style="color: #21579f; line-height; margin-top: 0; margin-bottom: .5rem; line-height: 1.2;font-size: 30px; font-weight: 300;">{obj.Title()}</h3>
+                    <h3 style="color: #DB002F ; line-height; margin-top: 0; margin-bottom: .5rem; line-height: 1.2;font-size: 30px; font-weight: 300;">{obj.Title()}</h3>
                 </a>
                 <p class="lead documentDescription" style="font-size: 18px; border-bottom: 1px solid #0095CA !important;
-                color: #c92a37 !important;
+                color:  #2b5d9f !important;
                 padding-bottom: 0.5em;
                 margin-bottom: 1em;
                 font-weight: 200 !important;">{obj.Description()}</p>"""
@@ -216,7 +217,7 @@ class SendNewsLetterView(BrowserView):
             
             html_output += f"""   
                 <a href="{obj.absolute_url()}"
-                   style="color: #fff; background-color: #c92a37;  
+                   style="color: #fff; background-color: #DB002F;  
                    border: 1px solid #c92a37; padding: 0.55rem 1rem; 
                    font-size: 1.2rem; line-height: 1.75; 
                    text-decoraration: none;
