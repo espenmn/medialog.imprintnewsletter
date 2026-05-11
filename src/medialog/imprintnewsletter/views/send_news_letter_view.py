@@ -96,7 +96,7 @@ class SendNewsLetterView(BrowserView):
             .text-break {word-wrap: break-word;	word-break: break-word;}
         </style>"""
         message  += f"""<body style="margin: 0; padding: 0; font-family: Roboto, Arial, sans-serif; background-color: #f4f4f4;">
-                        <div style="max-width: 600px; margin: 20px auto; 
+                        <table width="600" align="center" cellpadding="0" cellspacing="0"                         
                             background-color: #ffffff; padding: 20px; 
                             font-size: 15px; line-height: 1.6; color: #333;">                   
                             <a id="logo"
@@ -111,7 +111,7 @@ class SendNewsLetterView(BrowserView):
                                     style="max-width: 600px; height: auto"
                                 />
                             </a>
-                            <div style="color: silver; padding: 0.5rem 0; margin: 0.5rem 0;"><hr style="border: 1px dotted silver;"></div>
+                            <div style="color: silver; padding: 0.5rem 0; margin: 0.5rem 0;"><hr style="border: 1px dotted silver"></div>
                             <h1 style="color: #2b5d9f  ; 
                                 font-weight: 400 !important;
                                 font-size: 34px; margin-top: 0;
@@ -122,13 +122,13 @@ class SendNewsLetterView(BrowserView):
                                 {description}
                             </div>
                             {context.text.output if context.text else ''}
-                            <div style="color: #555; padding: 1rem 0; margin: 1rem 0;"><hr style="border: 1px dotted silver;/></div>
-                            
+                            <div style="color: #555; padding: 1rem 0; margin: 1rem 0;"><hr style="border: 1px dotted silver"/></div>
+                                                   
                         
                 """
         message += self.more_message()
         message += footer_text 
-        message +=  f"""</div>
+        message +=  f"""</table>
                 <div style="max-width: 600px; margin: 10px auto;">
                     {disclaimer_text} 
                 </div>                
@@ -202,7 +202,7 @@ class SendNewsLetterView(BrowserView):
             <article>
                 {image_html}
                 <a href="{obj.absolute_url()}" style="text-decoration: none">
-                    <h3 style="color: #DB002F ; line-height; margin-top: 0; margin-bottom: .5rem; line-height: 1.2;font-size: 30px; font-weight: 300;">{obj.Title()}</h3>
+                    <h3 style="color: #DB002F ; line-height; margin-top: 0.8rem; margin-bottom: 0.15rem; line-height: 1.2;font-size: 30px; font-weight: 300;">{obj.Title()}</h3>
                 </a>
                 <p class="lead documentDescription" style="font-size: 18px; border-bottom: 1px solid #0095CA !important;
                 color:  #2b5d9f !important;
