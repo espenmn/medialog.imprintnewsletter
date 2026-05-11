@@ -193,7 +193,7 @@ class SendNewsLetterView(BrowserView):
                 <div style="padding: 0; margin: 0.5rem 0">
                     <figure style="padding: 0; margin:0">
                         <img style="margin: 1rem 0 0.5rem" 
-                             src="{thumbnail.url}" width="{thumbnail.width}" height="{thumbnail.height}" loading="lazy"/>
+                             src="{thumbnail.url}" width="{thumbnail.width}" height="{thumbnail.height}" />
                         <figcaption style="color: #777;">{obj.image_caption or ''}</figcaption>
                     </figure>
                 </div>
@@ -203,7 +203,7 @@ class SendNewsLetterView(BrowserView):
             <article>
                 {image_html}
                 <a href="{obj.absolute_url()}" style="text-decoration: none">
-                    <h3 style="color: #DB002F ; line-height; margin-top: 0.8rem; margin-bottom: 0.15rem; line-height: 1.2;font-size: 30px; font-weight: 300;">{obj.Title()}</h3>
+                    <h3 style="color: #DB002F ; margin-top: 0.8rem; margin-bottom: 0.15rem; line-height: 1.2;font-size: 30px; font-weight: 300;">{obj.Title()}</h3>
                 </a>
                 <p class="lead documentDescription" style="font-size: 18px; border-bottom: 1px solid #0095CA !important;
                 color:  #2b5d9f !important;
