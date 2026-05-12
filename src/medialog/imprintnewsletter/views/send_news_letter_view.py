@@ -201,12 +201,14 @@ class SendNewsLetterView(BrowserView):
         
         image_width  =  api.portal.get_registry_record('image_width', interface=IMedialogImprintNewsletterSettings)
         image_height =  api.portal.get_registry_record('image_height', interface=IMedialogImprintNewsletterSettings)
+        image_mode  =  api.portal.get_registry_record('image_mode', interface=IMedialogImprintNewsletterSettings)
         
         html_output = ''
         for obj in items:
             # obj = item.getObject()
             scales = getMultiAdapter((obj, self.request), name="images")
-            thumbnail = scales.scale('image', width=image_width, height=image_height)
+            thumbnail = scales.scale('image', width=image_width, height=image_height, mode=image_mode)
+            # ', mode='scal
 
             image_html = ''
             if thumbnail:

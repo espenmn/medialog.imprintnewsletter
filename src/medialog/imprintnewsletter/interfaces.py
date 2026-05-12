@@ -54,7 +54,8 @@ class IMedialogImprintNewsletterSettings(model.Schema):
             'newsletter_from',
             'api_key',
             'image_width',
-            'image_height'
+            'image_height',
+            'image_mode'
             ],
         )
     
@@ -90,6 +91,12 @@ class IMedialogImprintNewsletterSettings(model.Schema):
         title="Max Image height in newsletter mail",
         required=True,
         default=400,
+    )
+    
+    image_mode = schema.Choice(
+        title="Image cropp mode",
+        required=True,
+        values=["scale", "contain", "cover"]
     )
 
 alsoProvides(IMedialogImprintNewsletterSettings, IMedialogControlpanelSettingsProvider)

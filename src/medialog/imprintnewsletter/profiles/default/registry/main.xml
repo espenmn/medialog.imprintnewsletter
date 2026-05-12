@@ -26,6 +26,9 @@
     interface="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterSettings" field="image_height">
   </record>
 
+  <record name="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterSettings.image_mode" 
+    interface="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterSettings" field="image_mode">
+  </record>
 
 </registry>
 
