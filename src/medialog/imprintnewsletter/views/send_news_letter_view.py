@@ -105,7 +105,7 @@ class SendNewsLetterView(BrowserView):
                         border="0"                         
                         style="background-color:#ffffff; border-collapse: collapse; margin: 20px auto"
                         >
-                        <tr text-align: center"
+                        <tr style="background-color:#ffffff">
                             <td style="padding: 20px; text-align: center">
                                 <a id="logo"
                                     title="{portal_title}"
@@ -123,7 +123,7 @@ class SendNewsLetterView(BrowserView):
                         </tr>
                 
                         <!-- DIVIDER -->
-                        <tr  >
+                        <tr style="background-color:#ffffff">
                             <td style="padding:0 20px; text-align:center">
                                 <hr style="border:0; border-top:1px dotted #c0c0c0;">
                             </td>
@@ -148,8 +148,8 @@ class SendNewsLetterView(BrowserView):
                         
                 """
         message += self.more_message()
-        message += footer_text 
-        message +=  f"""</table>
+        message += f"""<tr><td style="padding:0 20px;">{footer_text}</td></tr>"""
+        message += f"""</table>
                 <div style="max-width: 600px; width: 600px; margin: 10px auto; background-color: #f4f4f4;">
                     {disclaimer_text} 
                 </div>
@@ -211,21 +211,17 @@ class SendNewsLetterView(BrowserView):
             image_html = ''
             if thumbnail:
                 image_html = f"""
-                <tr style="padding-left: 20px; padding-right:20px;"> 
-                    <td style="text-align:left; margin: 0.5rem ; background-color: #ffffff">
-                        <figure style="padding: 0; margin:0">
-                            <img style="margin: 1rem 0 0.5rem" 
-                                alt="{obj.image_caption or ''}"
-                                src="{thumbnail.url}" width="{thumbnail.width}" height="{thumbnail.height}" />
-                            <figcaption style="color: #777;">{obj.image_caption or ''}</figcaption>
-                        </figure>
-                    </td>
-                </tr>
+                <figure style="padding: 0; margin:0">
+                    <img style="margin: 1rem 0 0.5rem" 
+                        alt="{obj.image_caption or ''}"
+                        src="{thumbnail.url}" width="{thumbnail.width}" height="{thumbnail.height}" />
+                    <figcaption style="color: #777;">{obj.image_caption or ''}</figcaption>
+                </figure>
                 """
 
             html_output += f"""
-            <tr style="text-align:left" style="max-width: 600px; width: 600px;" >
-            <td style="background-color: #ffffff; text-align:left; padding-left: 20px; padding-right:20px;">
+            <tr style="text-align:left">
+                <td style="background-color: #ffffff; text-align:left; padding-left: 20px; padding-right:20px;">
                 {image_html}
                 <a href="{obj.absolute_url()}" style="text-decoration: none">
                     <h3 style="color: #DB002F ; margin-top: 0.8rem; margin-bottom: 0.15rem; line-height: 1.2;font-size: 30px; font-weight: 300;">{obj.Title()}</h3>
@@ -234,8 +230,9 @@ class SendNewsLetterView(BrowserView):
                 color:  #2b5d9f !important;
                 padding-bottom: 0.5em;
                 margin-bottom: 1em;
-                font-weight: 200 !important;">{obj.Description()}</p>"""
-                # <div>{obj.text.output if obj.text else ''}</div>"""
+                font-weight: 200 !important;">{obj.Description()}</p>
+                """
+            # <div>{obj.text.output if obj.text else ''}</div>"""
                 
             if obj.portal_type == 'Proloog':
                 html_output += f"""
@@ -248,7 +245,8 @@ class SendNewsLetterView(BrowserView):
                    font-size: 1.2rem; line-height: 1.75; 
                    text-decoration: none !important;
                    border-radius: 0.175rem">Lees verder</a>
-            </td></tr>
+                </td>
+            </tr>
             <tr><td style="padding: 2rem 0; margin: 1rem 0; background-color: #ffffff;"><hr/></td></tr>
             """
         
@@ -429,16 +427,15 @@ class SendNewsLetterView(BrowserView):
             member = api.user.get_current()
             recipient = member.getProperty('email')
             fullname = member.getProperty('fullname')
+            messages = IStatusMessage(self.request)
             if recipient:
-                # self.send_with_brevo(context, request, recipient, fullname)
                 self.send_email(context, request, recipient, fullname)
                 messages.add(_("test_mail_sent",
-                                                    default=u"Mail sent to ",
+                                                    default=u"Sent to ",
                                                     mapping={'email': recipient },
                                                     ),
                                                     type="info")
             else:
-                messages = IStatusMessage(self.request)
                 messages.add(_("cant_send_mail_message",
                                                     default=u"User does not have email",
                                                     mapping={'email': recipient },
