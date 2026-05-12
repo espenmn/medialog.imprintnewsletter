@@ -12,17 +12,16 @@
 
             <form method="post" action="${context/absolute_url}/@@subscribe">
               <div class="form-group xcard">
-
+                <label for="inputEmail" class="required" i18n:translate="label_email">E-mail</label>
                 <input id="inputEmail" class="form-control" type="email" name="email" 
                       tal:attributes="value request/email|request/form/email|None"
                       placeholder="Voer uw e-mailadres in" i18n:attributes="placeholder email_placeholder;"
                        required />
-
                 <hr/>
 
                 <!-- Language selector -->
-                <!-- <label for="language" i18n:translate="label_language">Language</label> -->
-                <select id="language" name="language" class="form-control" with="20" i18n:attributes="title language_title;">
+                <label for="language" class="required" i18n:translate="label_language">Taal</label>
+                <select id="language" name="language" class="form-control required" with="20" required="required" i18n:attributes="title language_title;"> 
                   <option value="" i18n:translate="lang_none">Choose language</option>
                   <option value="nl" i18n:translate="lang_dutch">Dutch</option>
                   <option value="en" i18n:translate="lang_english">English</option>

@@ -102,8 +102,7 @@ class SendNewsLetterView(BrowserView):
                         max-width="640px"
                         cellpadding="20px"
                         cellspacing="0"
-                        border="0"
-                         
+                        border="0"                         
                         style="background-color:#ffffff; border-collapse: collapse; margin: 20px auto"
                         >
                         <tr text-align: center"
@@ -433,6 +432,11 @@ class SendNewsLetterView(BrowserView):
             if recipient:
                 # self.send_with_brevo(context, request, recipient, fullname)
                 self.send_email(context, request, recipient, fullname)
+                messages.add(_("test_mail_sent",
+                                                    default=u"Mail sent to ",
+                                                    mapping={'email': recipient },
+                                                    ),
+                                                    type="info")
             else:
                 messages = IStatusMessage(self.request)
                 messages.add(_("cant_send_mail_message",
