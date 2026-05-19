@@ -249,7 +249,7 @@ class SendNewsLetterView(BrowserView):
                    border-radius: 0.175rem">Lees verder</a>
                 </td>
             </tr>
-            <tr><td style="padding: 2rem 20px; margin: 1rem 0; background-color: #ffffff;"><hr/></td></tr>
+            <tr><td style="padding: 2rem 20px; margin: 1rem 0; background-color: #ffffff;"><hr style="color: silver"/></td></tr>
             """
         
         return html_output
