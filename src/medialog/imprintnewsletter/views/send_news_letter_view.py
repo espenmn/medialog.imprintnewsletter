@@ -228,7 +228,7 @@ class SendNewsLetterView(BrowserView):
                 <a href="{obj.absolute_url()}" style="text-decoration: none">
                     <h3 style="color: #DB002F ; margin-top: 0.8rem; margin-bottom: 0.15rem; line-height: 1.2;font-size: 30px; font-weight: 300;">{obj.Title()}</h3>
                 </a>
-                <p class="lead documentDescription" style="font-size: 18px; border-bottom: 1px solid #0095CA !important;
+                <p class="lead documentDescription" style="font-size: 18px; border-bottom: 0 none !important;
                 color:  #2b5d9f !important;
                 padding-bottom: 0.5em;
                 margin-bottom: 1em;
@@ -249,7 +249,7 @@ class SendNewsLetterView(BrowserView):
                    border-radius: 0.175rem">Lees verder</a>
                 </td>
             </tr>
-            <tr><td style="padding: 2rem 0; margin: 1rem 0; background-color: #ffffff;"><hr/></td></tr>
+            <tr><td style="padding: 2rem 20px; margin: 1rem 0; background-color: #ffffff;"><hr/></td></tr>
             """
         
         return html_output
@@ -432,6 +432,7 @@ class SendNewsLetterView(BrowserView):
             messages = IStatusMessage(self.request)
             if recipient:
                 self.send_email(context, request, recipient, fullname)
+                print('testmail sent')
                 messages.add(_("test_mail_sent",
                                                     default=u"Sent to ",
                                                     mapping={'email': recipient },

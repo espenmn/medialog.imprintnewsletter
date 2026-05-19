@@ -72,6 +72,8 @@
                 </p>
               </tal:condition>
 
+              
+
               <a class="button btn custom-background2 white" href="${obj/absolute_url}" i18n:translate="">Lees verder…</a>
 
             </article>
@@ -102,9 +104,11 @@
 
         <style>
       .border-0 {border: 0; padding: 2rem 0; width: 600px;  }
-      .border-1 {border: 1px dotted silver; padding: 2rem; width: 600px; background: white}
+      .border-1 {border: 1px dotted silver; padding: 2rem; max-width: 600px; background: white}
       .outer-wrapper {background: whitesmoke}
       .btn-warning {float: right;}
+      .lead.documentDescription {border-bottom: 0 none !important;}
+      .button.custom-background2 { font-size: 1.25rem}
         </style>
       </metal:block>
     </metal:content-core>
