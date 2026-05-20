@@ -136,7 +136,6 @@ class SubscribeView(BrowserView):
                 continue
 
             # find matching entries
-            import pdb; pdb.set_trace()
             matches = [item for item in subscribers if item.get('email', '').lower() == email]
             
             if not matches:
