@@ -52,7 +52,7 @@
             </form>
           </div>
         </div>
-        <div class="card" tal:condition="view/subscribers_json|None"> 
+        <div class="card" tal:condition="view/subscribers_json|None">  
           <div class="card-body">
             <h3 i18n:translate="heading_current_subscribers">Huidige abonnees</h3>
             <table class="listing pat-datatables"

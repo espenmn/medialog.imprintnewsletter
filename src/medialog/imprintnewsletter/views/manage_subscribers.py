@@ -281,27 +281,7 @@ class SubscribeView(BrowserView):
         if col_language is None:
             df["language"] = None
             col_language = "language"
-
-        # Apply logic based on country
-        # if col_land:
-        #     df[col_language] = df[col_land].apply(
-        #         lambda x: "nl" if str(x).strip().lower() == "nederland" 
-        #         else "fr" if str(x).strip().lower() == "frankrijk"
-        #         else "de" if str(x).strip().lower() ==  "german" 
-        #         else "de" if str(x).strip().lower() ==  "germany" 
-        #         else "en"
-        #     )
-        # else:
-        #     # fallback if no country column
-        #     df[col_language] = "en"
-            
-             
-        # # Fill defaults
-        # if col_language is None:
-        #     df["language"] = "nl"
-        #     col_language = "language"
-        # else:
-        #     df[col_language] = df[col_language].fillna("nl")
+ 
 
         if col_joined is None:
             df["joined"] = DateTime()
@@ -323,7 +303,7 @@ class SubscribeView(BrowserView):
             language = row[col_language]
             joined = row[col_joined]
             status = row[col_status]
-            
+             
             if not language or str(language) == 'nan':
                 land = row[col_land].lower() if pd.notna(row.get(col_land)) else "en"
                 lang_map = {
@@ -335,6 +315,8 @@ class SubscribeView(BrowserView):
                 }
                 language = lang_map.get(land, "en") 
                 
+            if not status or str(status) == 'nan':
+                status = ""
             
             if email and self.is_probably_email(email):
                 exists = any(item.get("email") == email for item in subscribers + unsubscribers)
