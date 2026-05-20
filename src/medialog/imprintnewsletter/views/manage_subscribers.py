@@ -12,6 +12,9 @@ from Products.CMFPlone.utils import getSite
 from email.utils import parseaddr 
 from DateTime import DateTime
 import json
+from plone import api
+# import uuid
+from urllib.parse import urlencode
 
 import io
 # from datetime import datetime
@@ -36,7 +39,9 @@ class SubscribeView(BrowserView):
         return '/@@subscribe'
 
     def __call__(self):
-        messages = IStatusMessage(self.request)
+        messages = IStatusMessage(self.request)       
+        email = self.request.get("email")
+
         if 'form.button_exportexcel' in self.request.form:
             return self.export_excel()
         elif 'form.button_importexcel' in self.request.form:
@@ -51,7 +56,21 @@ class SubscribeView(BrowserView):
             return self._handle_remove()
         elif 'form.button_deleteall' in self.request.form:
             return self._deleteall()
+        elif email:
+            return self.confirm(email)
+        
         return self.template()  # Calls template, avoids recursion
+    
+    def confirm(self, email):
+        subscribers = self._get_subscribers()
+        for subscriber in subscribers:
+            if subscriber.get('email', '') == email:
+                subscriber['status'] = 'confirmed'
+                api.portal.show_message(
+                        "Subscription confirmed.",
+                        type="info"
+                )
+        return self.template()
     
     def is_probably_email(self, s):
         name, addr = parseaddr(s)
@@ -79,6 +98,7 @@ class SubscribeView(BrowserView):
                     "email": s.get("email"),
                     "language": s.get("language"),
                     "created": s.get("created").Date() if s.get("created") else "",
+                    "status": s.get("status") if s.get("status") else "",
             })
         # return data
         return json.dumps(data)
@@ -93,6 +113,7 @@ class SubscribeView(BrowserView):
         email = self.request.form.get('email', '').strip().lower()
         language = self.request.form.get('language') or None
         messages = IStatusMessage(self.request)
+        # token = uuid.uuid4().hex
         if email and language:
             subscribers = self._get_subscribers()
             for email in email.split():
@@ -105,9 +126,32 @@ class SubscribeView(BrowserView):
                     subscribers.append({
                         'email': email,
                         'language': language,
-                        "created": DateTime()
+                        "created": DateTime(),
+                        "status": ""
                     })
                     messages.add("Successfully subscribed.", type="info")
+                    
+                    # send confirm email
+                    # Link back to SAME PAGE
+                    params = {
+                        'email': email,
+                    }
+                    confirm_url = "{}/@@manage-subscribers?{}".format(
+                        self.context.absolute_url(),
+                        urlencode(params)
+)
+                    confirm_message = f"""
+                    Please confirm your subscription:
+                    {confirm_url}
+                    """
+                    print(confirm_message)
+
+                    api.portal.send_email(
+                        recipient=email,
+                        subject="Confirm your subscription",
+                        body=confirm_message,
+                    )
+                    
                 else:
                     messages.add("Already subscribed or not valid.", type="warning")
         else:
@@ -156,7 +200,8 @@ class SubscribeView(BrowserView):
                 unsubscribers.append({
                         'email': item['email'],
                         'language': item['language'],
-                        'created': item['created']
+                        'created': item['created'],
+                        'status': item['status']
                     })
             
 
@@ -172,14 +217,14 @@ class SubscribeView(BrowserView):
         ws2 = wb.create_sheet("Unsubscribers")
 
         # Fill Subscribers sheet
-        ws1.append(["E-mail", "Taal", "Aangemeld"])
+        ws1.append(["E-mail", "Taal", "Aangemeld", "Status"])
         for sub in self.subscribers():
-            ws1.append([sub["email"], sub["language"], sub["created"].strftime("%Y-%m-%d")])
+            ws1.append([sub["email"], sub["language"], sub["created"].strftime("%Y-%m-%d"), sub["status"]])
 
         # Fill Unsubscribers sheet
-        ws2.append(["E-mail", "Taal"])
+        ws2.append(["E-mail", "Taal", "Aangemeld", "Status"])
         for unsub in self.unsubscribers():
-            ws2.append([unsub["email"], unsub["language"], unsub["created"].strftime("%Y-%m-%d")])
+            ws2.append([unsub["email"], unsub["language"], unsub["created"].strftime("%Y-%m-%d"), sub["status"]])
 
         # Save workbook to BytesIO
         output = io.BytesIO()
@@ -226,6 +271,7 @@ class SubscribeView(BrowserView):
         col_language = next((c for c in df.columns if "taal" in c.lower()), None)
         col_land = next((c for c in df.columns if "naam land" in c.lower()), None)
         col_joined = next((c for c in df.columns if "aangemeld" in c.lower()), None)
+        col_status = next((c for c in df.columns if "status" in c.lower()), None)
 
         if not col_email:
             messages.add("No 'email' column found in Excel", type="error")
@@ -276,6 +322,7 @@ class SubscribeView(BrowserView):
             email = row[col_email]
             language = row[col_language]
             joined = row[col_joined]
+            status = row[col_status]
             
             if not language or str(language) == 'nan':
                 land = row[col_land].lower() if pd.notna(row.get(col_land)) else "en"
@@ -295,7 +342,8 @@ class SubscribeView(BrowserView):
                     subscribers.append({
                         "email": email,
                         "language": language,
-                        "created": joined
+                        "created": joined,
+                        "status": status
                     })
                     added.append(email)
                 else:

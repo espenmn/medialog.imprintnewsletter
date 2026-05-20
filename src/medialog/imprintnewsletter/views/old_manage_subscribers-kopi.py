@@ -11,8 +11,12 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFPlone.utils import getSite
 from email.utils import parseaddr 
 from DateTime import DateTime
+from plone import api
+import uuid
+from urllib.parse import urlencode
 
-import io
+
+import io   
 # from datetime import datetime
 # import xlsxwriter  # You need this package installed in your Plone/Python environment
 from openpyxl import Workbook
@@ -74,6 +78,7 @@ class SubscribeView(BrowserView):
         email = self.request.form.get('email', '').strip().lower()
         language = self.request.form.get('language') or None
         messages = IStatusMessage(self.request)
+        token = uuid.uuid4().hex
         if email and language:
             subscribers = self._get_subscribers()
             for email in email.split():
@@ -86,9 +91,31 @@ class SubscribeView(BrowserView):
                     subscribers.append({
                         'email': email,
                         'language': language,
-                        "created": DateTime()
+                        "created": DateTime(),
+                        'status' : ''
                     })
                     messages.add("Successfully subscribed.", type="info")
+                    
+                    # send confirm email
+                    # Link back to SAME PAGE
+                    params = {
+                        'confirm': token,
+                        'email': email,
+                    }
+                    confirm_url = "{}?{}".format(
+                        self.context.absolute_url(),
+                        urlencode(params)
+)
+                    confirm_message = f"""
+                    Please confirm your subscription:
+                    {confirm_url}
+                    """
+
+                    api.portal.send_email(
+                        recipient=email,
+                        subject="Confirm your subscription",
+                        body=confirm_message,
+                    )
                 else:
                     messages.add("Already subscribed or not valid.", type="warning")
         else:
@@ -137,7 +164,8 @@ class SubscribeView(BrowserView):
                 unsubscribers.append({
                         'email': email,
                         'language': language,
-                         "created": DateTime()
+                        'created': DateTime()
+                        'status': '' 
                     })
             
 
@@ -153,14 +181,14 @@ class SubscribeView(BrowserView):
         ws2 = wb.create_sheet("Unsubscribers")
 
         # Fill Subscribers sheet
-        ws1.append(["E-mail", "Taal", "Aangemeld"])
+        ws1.append(["E-mail", "Taal", "Aangemeld", "Status"])
         for sub in self.subscribers():
-            ws1.append([sub["email"], sub["language"], sub["created"].strftime("%Y-%m-%d")])
+            ws1.append([sub["email"], sub["language"], sub["created"].strftime("%Y-%m-%d"), sub["status"]])
 
         # Fill Unsubscribers sheet
         ws2.append(["E-mail", "Taal"])
         for unsub in self.unsubscribers():
-            ws2.append([unsub["email"], unsub["language"], unsub["created"].strftime("%Y-%m-%d")])
+            ws2.append([unsub["email"], unsub["language"], unsub["created"].strftime("%Y-%m-%d"), sub["status"]])
 
         # Save workbook to BytesIO
         output = io.BytesIO()
@@ -220,12 +248,11 @@ class SubscribeView(BrowserView):
                     subscribers.append({
                             'email': email,
                             'language': language,
-                            "created": joined
+                            'created': joined,
+                            'status': ''
                         })
                     messages.add(f"{email} successfully subscribed.", type="info")
                 messages.add(f"{email} not added.", type="info")
-                    
-                    
                 
 
         return self.template()

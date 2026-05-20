@@ -477,6 +477,7 @@ class SendNewsLetterView(BrowserView):
             if (
                 r.get("email")
                 and r["email"] not in already_sent
+                and r["status"] == 'confirmed'
                 and (
                     newsletter_language == "all"
                     or r.get("language") == newsletter_language

@@ -52,7 +52,7 @@
             </form>
           </div>
         </div>
-        <div class="card" tal:condition="view/subscribers_json|None">
+        <div class="card" tal:condition="view/subscribers_json|None"> 
           <div class="card-body">
             <h3 i18n:translate="heading_current_subscribers">Huidige abonnees</h3>
             <table class="listing pat-datatables"
@@ -61,7 +61,8 @@
                   "columns": [
                     {"data": "email", "title": "E-mail"},
                     {"data": "language", "title": "Taal"},
-                    {"data": "created", "title": "Aangemeld"}
+                    {"data": "created", "title": "Aangemeld"},
+                    {"data": "status", "title": "Status"}
                   ]
                 }'>
           </table> 
@@ -77,6 +78,7 @@
                   <th i18n:translate="">Email</th>
                   <th i18n:translate="">Language</th>
                   <th i18n:translate="">Afgemeld</th>
+                  <th i18n:translate="">Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -84,6 +86,7 @@
                   <td tal:content="python: subscriber['email']">Email</td>
                   <td tal:content="python: subscriber['language']">Lang</td>
                   <td tal:content="python: subscriber['created'].Date()">Aangemeld</td>
+                  <td tal:content="python: subscriber.get('status') or ''"></td>
                 </tr>
               </tbody>
             </table>
