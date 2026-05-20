@@ -136,6 +136,7 @@ class SubscribeView(BrowserView):
                 continue
 
             # find matching entries
+            import pdb; pdb.set_trace()
             matches = [item for item in subscribers if item.get('email', '').lower() == email]
             
             if not matches:
@@ -154,9 +155,9 @@ class SubscribeView(BrowserView):
                     subscribers.remove(item)
                 messages.add(f"{email}: unsubscribed successfully.", type="info")
                 unsubscribers.append({
-                        'email': email,
-                        'language': language,
-                        'created': DateTime()
+                        'email': item['email'],
+                        'language': item['language'],
+                        'created': item['created']
                     })
             
 
