@@ -219,12 +219,12 @@ class SubscribeView(BrowserView):
         # Fill Subscribers sheet
         ws1.append(["E-mail", "Taal", "Aangemeld", "Status"])
         for sub in self.subscribers():
-            ws1.append([sub["email"], sub["language"], sub["created"].strftime("%Y-%m-%d"), sub["status"]])
+            ws1.append([sub["email"], sub["language"], sub["created"].strftime("%Y-%m-%d"), sub.get("status", "")])
 
         # Fill Unsubscribers sheet
         ws2.append(["E-mail", "Taal", "Aangemeld", "Status"])
         for unsub in self.unsubscribers():
-            ws2.append([unsub["email"], unsub["language"], unsub["created"].strftime("%Y-%m-%d"), sub["status"]])
+            ws2.append([unsub["email"], unsub["language"], unsub["created"].strftime("%Y-%m-%d"), sub.get("status", "")])
 
         # Save workbook to BytesIO
         output = io.BytesIO()
