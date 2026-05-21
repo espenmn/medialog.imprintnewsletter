@@ -15,6 +15,7 @@ import json
 from plone import api
 # import uuid
 from urllib.parse import urlencode
+import requests
 from medialog.imprintnewsletter.interfaces import IMedialogImprintNewsletterSettings
 
 import io
@@ -42,7 +43,8 @@ class SubscribeView(BrowserView):
         return '/@@subscribe'
 
     def __call__(self):
-        email = self.request.get("email")
+        request = self.request
+        email = request.get("email")
 
         if 'form.button_exportexcel' in self.request.form:
             return self.export_excel()
@@ -61,8 +63,18 @@ class SubscribeView(BrowserView):
             return self._deleteall()
         elif email:
             return self.confirm(email)
+        else:
+            return self.template()  # Calls template, avoids recursion
+    
+    def is_confirming(self):
+        subscribers = self._get_subscribers()
+        request = self.request
+        email = request.get("email")
+        for subscriber in subscribers:
+            if subscriber.get('email', '') == email:
+                return True
+        return False
         
-        return self.template()  # Calls template, avoids recursion
     
     def confirm(self, email):
         messages = IStatusMessage(self.request)  
@@ -75,13 +87,12 @@ class SubscribeView(BrowserView):
                                                  ),
                                                  type="info")
             messages.add(f"Subscription confirmed: {email}:", type="info")
-                # api.portal.show_message(
-                #         "Subscription confirmed.",
-                #         type="info"
-                # )
-        return self.request.response.redirect(
-                self.context.absolute_url() + self.redirect_view()
-            )
+            api.portal.show_message(
+                        "Subscription confirmed.",
+                        type="info"
+                )
+            
+        return self.template()
         # return self.request.response.redirect(self.context.absolute_url() + self.redirect_view() )
     
     def is_probably_email(self, s):
@@ -358,7 +369,9 @@ class SubscribeView(BrowserView):
             messages.add(f"Successfully subscribed: {(", ").join(added)}: ", type="info")
         messages.add(f"Not added (already exists or is on unsubscribe list): {(", ").join(not_added)}.", type="warning")    
 
-        return self.template()
+        return self.request.response.redirect(
+            self.context.absolute_url() + self.redirect_view()
+        )
     
         
 class ManageSubscribersView(SubscribeView):

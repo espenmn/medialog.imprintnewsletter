@@ -14,6 +14,11 @@
 
             <h1 i18n:translate="heading_subscribe_unsubscribe">Aanmelden/afmelden voor e-maillijst</h1>
 
+            <div class="plone-background padding-10 white white-text margin-10-0" 
+              tal:condition="view/is_confirming|None">
+              <p><b>Email confirmed</b></p> 
+            </div>
+
             <form method="post" action="${context/absolute_url}/@@subscribe">
               <div class="form-group xcard">
                 <label for="inputEmail" class="required" i18n:translate="label_email">E-mail</label>
