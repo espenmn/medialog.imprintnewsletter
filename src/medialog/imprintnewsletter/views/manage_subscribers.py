@@ -85,9 +85,6 @@ class SubscribeView(BrowserView):
             if subscriber.get('email', '') == email:
                 subscriber['status'] = 'confirmed'
             
-            messages.add(_("sent_mail_message",  default=u"Sent to  $email",
-                                                 ),
-                                                 type="info")
             messages.add(f"Subscription confirmed: {email}:", type="info")
             api.portal.show_message(
                         "Subscription confirmed.",
