@@ -10,7 +10,6 @@
     name="manage-subscribers"
     for="Products.CMFPlone.interfaces.siteroot.IPloneSiteRoot"
     class=".manage_subscribers.ManageSubscribersView"
-    template="manage_subscribers.pt"
     permission="cmf.ManagePortal"
     layer="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterLayer"
     />
@@ -33,7 +32,6 @@
     name="subscribe"
     for="Products.CMFPlone.interfaces.siteroot.IPloneSiteRoot"
     class=".manage_subscribers.SubscribeView"
-    template="subscribe.pt"
     permission="zope2.View"
     layer="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterLayer"
     />

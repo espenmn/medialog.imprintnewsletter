@@ -15,7 +15,8 @@ import json
 from plone import api
 # import uuid
 from urllib.parse import urlencode
-import requests
+from zope.i18nmessageid import MessageFactory
+_ = MessageFactory('medialog.imprintnewsletter')
 from medialog.imprintnewsletter.interfaces import IMedialogImprintNewsletterSettings
 
 import io
@@ -45,7 +46,7 @@ class SubscribeView(BrowserView):
     def __call__(self):
         request = self.request
         email = request.get("email")
-
+        
         if 'form.button_exportexcel' in self.request.form:
             return self.export_excel()
         elif 'form.button_importexcel' in self.request.form:
@@ -63,8 +64,8 @@ class SubscribeView(BrowserView):
             return self._deleteall()
         elif email:
             return self.confirm(email)
-        else:
-            return self.template()  # Calls template, avoids recursion
+        
+        return self.template()  # Calls template, avoids recursion
     
     def is_confirming(self):
         subscribers = self._get_subscribers()
@@ -79,6 +80,7 @@ class SubscribeView(BrowserView):
     def confirm(self, email):
         messages = IStatusMessage(self.request)  
         subscribers = self._get_subscribers()
+        
         for subscriber in subscribers:
             if subscriber.get('email', '') == email:
                 subscriber['status'] = 'confirmed'
@@ -92,8 +94,7 @@ class SubscribeView(BrowserView):
                         type="info"
                 )
             
-        return self.template()
-        # return self.request.response.redirect(self.context.absolute_url() + self.redirect_view() )
+        return self.request.response.redirect(self.context.absolute_url() + self.redirect_view() )
     
     def is_probably_email(self, s):
         name, addr = parseaddr(s)
