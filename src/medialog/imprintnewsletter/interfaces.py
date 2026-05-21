@@ -51,6 +51,7 @@ class IMedialogImprintNewsletterSettings(model.Schema):
         fields=[
             'footer_text',
             'disclaimer_text',
+            'confirm_text',
             'newsletter_from',
             'api_key',
             'image_width',
@@ -76,6 +77,11 @@ class IMedialogImprintNewsletterSettings(model.Schema):
         required=True,
     )
     
+    confirm_text = schema.Text(
+        title="Text to send in confirm email",
+        required=True,
+    )
+    
     api_key = schema.TextLine(
         title="SMPETER API KEY",
         required=False,
@@ -98,5 +104,7 @@ class IMedialogImprintNewsletterSettings(model.Schema):
         required=True,
         values=["scale", "contain", "cover"]
     )
+    
+    
 
 alsoProvides(IMedialogImprintNewsletterSettings, IMedialogControlpanelSettingsProvider)

@@ -15,6 +15,7 @@ import json
 from plone import api
 # import uuid
 from urllib.parse import urlencode
+from medialog.imprintnewsletter.interfaces import IMedialogImprintNewsletterSettings
 
 import io
 # from datetime import datetime
@@ -30,7 +31,9 @@ UNSUBSCRIBERS_KEY = 'medialog.imprintnewsletter.unsubscribers'
 class IManageSubscribersView(Interface):
     """ Marker Interface for IManageSubscribersView"""
 
-
+class IMSubscribeView(Interface):
+    """ Marker Interface for ISubscribeView"""
+ 
 class SubscribeView(BrowserView):
     template = ViewPageTemplateFile('subscribe.pt')
     
@@ -39,7 +42,6 @@ class SubscribeView(BrowserView):
         return '/@@subscribe'
 
     def __call__(self):
-        messages = IStatusMessage(self.request)       
         email = self.request.get("email")
 
         if 'form.button_exportexcel' in self.request.form:
@@ -49,6 +51,7 @@ class SubscribeView(BrowserView):
             if fileobj :
                 return self.import_excel(fileobj)
             else:
+                messages = IStatusMessage(self.request)  
                 messages.add(f"No file or bad file.", type="error") 
         elif 'form.subscribed' in self.request.form:
             return self._handle_add()
@@ -62,15 +65,24 @@ class SubscribeView(BrowserView):
         return self.template()  # Calls template, avoids recursion
     
     def confirm(self, email):
+        messages = IStatusMessage(self.request)  
         subscribers = self._get_subscribers()
         for subscriber in subscribers:
             if subscriber.get('email', '') == email:
                 subscriber['status'] = 'confirmed'
-                api.portal.show_message(
-                        "Subscription confirmed.",
-                        type="info"
-                )
-        return self.template()
+            
+            messages.add(_("sent_mail_message",  default=u"Sent to  $email",
+                                                 ),
+                                                 type="info")
+            messages.add(f"Subscription confirmed: {email}:", type="info")
+                # api.portal.show_message(
+                #         "Subscription confirmed.",
+                #         type="info"
+                # )
+        return self.request.response.redirect(
+                self.context.absolute_url() + self.redirect_view()
+            )
+        # return self.request.response.redirect(self.context.absolute_url() + self.redirect_view() )
     
     def is_probably_email(self, s):
         name, addr = parseaddr(s)
@@ -136,15 +148,24 @@ class SubscribeView(BrowserView):
                     params = {
                         'email': email,
                     }
+                    
                     confirm_url = "{}/@@manage-subscribers?{}".format(
                         self.context.absolute_url(),
                         urlencode(params)
-)
-                    confirm_message = f"""
-                    Please confirm your subscription:
-                    {confirm_url}
-                    """
-                    print(confirm_message)
+                    )
+                    
+                    confirm_text = api.portal.get_registry_record('confirm_text', interface=IMedialogImprintNewsletterSettings)
+    
+                        
+                    if 'subscribe.pt' in self.template.filename:
+                        confirm_url = "{}/@@subscribe?{}".format(
+                            self.context.absolute_url(),
+                            urlencode(params)
+                    )
+ 
+                    confirm_message = f"""{confirm_text}
+{confirm_url}
+                    """ 
 
                     api.portal.send_email(
                         recipient=email,
@@ -355,4 +376,4 @@ class ManageSubscribersView(SubscribeView):
         #TO DO, get this from utils
         data = self._get_unsubscribers()
         return sorted(data, key=lambda x: x['email']) 
-    
+ 

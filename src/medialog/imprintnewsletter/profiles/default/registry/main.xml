@@ -30,5 +30,8 @@
     interface="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterSettings" field="image_mode">
   </record>
 
+  <record name="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterSettings.confirm_text" 
+    interface="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterSettings" field="confirm_text">
+  </record>
 </registry>
 
