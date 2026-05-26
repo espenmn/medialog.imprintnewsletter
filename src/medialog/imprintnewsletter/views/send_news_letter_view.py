@@ -148,10 +148,8 @@ class SendNewsLetterView(BrowserView):
                 """
         message += self.more_message()
         message += f"""<tr><td style="padding:0 20px;">{footer_text}</td></tr>"""
+        message += f"""<tr><td style="padding:0 20px;">{disclaimer_text}</td></tr>"""
         message += f"""</table>
-                <div style="max-width: 600px; width: 600px; margin: 10px auto; background-color: #f4f4f4;">
-                    {disclaimer_text} 
-                </div>
                 </body>               
                 </html>"""
         
