@@ -98,12 +98,11 @@ class SendNewsLetterView(BrowserView):
         message  += f"""<body style="margin: 0; padding: 20px; font-family: Roboto, Arial, sans-serif; background-color: #f4f4f4;">
                      <table
                         role="presentation"
-                        width="640px"
-                        max-width="640px"
-                        cellpadding="20px"
+                        width="640"
+                        cellpadding="20"
                         cellspacing="0"
                         border="0"                         
-                        style="background-color:#ffffff; border-collapse: collapse; margin: 20px auto"
+                        style="background-color:#ffffff; border-collapse: collapse; margin: 20px auto; max-width:640px;"
                         >
                         <tr style="background-color:#ffffff">
                             <td style="padding: 20px; text-align: center">
