@@ -56,7 +56,7 @@ class IMedialogImprintNewsletterSettings(model.Schema):
             'api_key',
             'image_width',
             'image_height',
-            'image_mode'
+            'image_mode',
             'day_limit'
             ],
         )
