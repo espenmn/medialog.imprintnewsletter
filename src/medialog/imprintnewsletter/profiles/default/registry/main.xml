@@ -33,5 +33,10 @@
   <record name="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterSettings.confirm_text" 
     interface="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterSettings" field="confirm_text">
   </record>
+
+    <record name="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterSettings.day_limit" 
+    interface="medialog.imprintnewsletter.interfaces.IMedialogImprintNewsletterSettings" field="day_limit">
+  </record>
+  
 </registry>
 

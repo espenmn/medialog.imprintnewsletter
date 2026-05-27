@@ -468,16 +468,26 @@ class SendNewsLetterView(BrowserView):
 
     def _get_recipients_to_send(self, context, recipients, already_sent):
         newsletter_language = getattr(context, "newsletter_language", "all")
+        
+        day_limit = api.portal.get_registry_record(
+            'day_limit',
+            interface=IMedialogImprintNewsletterSettings
+        )
+
+        use_day_limit = bool(day_limit)
 
         return [
             r for r in recipients
             if (
                 r.get("email")
-                and r["email"] not in already_sent
-                and r["status"] == 'confirmed'
+                and r["status"] == "confirmed"
                 and (
                     newsletter_language == "all"
                     or r.get("language") == newsletter_language
+                )
+                and (
+                    not use_day_limit
+                    or r["email"] not in already_sent
                 )
             )
         ]

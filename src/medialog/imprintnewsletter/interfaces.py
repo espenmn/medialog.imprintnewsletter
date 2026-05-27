@@ -57,6 +57,7 @@ class IMedialogImprintNewsletterSettings(model.Schema):
             'image_width',
             'image_height',
             'image_mode'
+            'day_limit'
             ],
         )
     
@@ -103,6 +104,11 @@ class IMedialogImprintNewsletterSettings(model.Schema):
         title="Image cropp mode",
         required=True,
         values=["scale", "contain", "cover"]
+    )
+    
+    day_limit = schema.Bool(
+        title="Limit to one newsletter a day",
+        required=False
     )
     
     
