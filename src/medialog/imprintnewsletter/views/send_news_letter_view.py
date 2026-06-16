@@ -223,12 +223,14 @@ class SendNewsLetterView(BrowserView):
                 <td style="background-color: #ffffff; text-align:left; padding-left: 20px; padding-right:20px;">
                 {image_html}
                 <a href="{obj.absolute_url()}" style="text-decoration: none">
-                    <h3 style="color: #DB002F ; margin-top: 0.8rem; margin-bottom: 0.15rem; line-height: 1.2;font-size: 30px; font-weight: 300;">{obj.Title()}</h3>
+                    <h3 style="color: #DB002F ; margin-top: 1rem; margin-bottom: 0; line-height: 1.2;font-size: 30px; font-weight: 300;">{obj.Title()}</h3>
                 </a>
                 <p class="lead documentDescription" style="font-size: 18px; border-bottom: 0 none !important;
                 color:  #2b5d9f !important;
                 padding-bottom: 0.5em;
                 margin-bottom: 1em;
+                margin-top: 0;
+                padding-top: 0;
                 font-weight: 200 !important;">{obj.Description()}</p>
                 """
             # <div>{obj.text.output if obj.text else ''}</div>"""
