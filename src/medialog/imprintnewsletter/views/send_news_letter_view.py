@@ -242,10 +242,11 @@ class SendNewsLetterView(BrowserView):
             html_output += f"""   
                 <a href="{obj.absolute_url()}"
                    style="color: #fff; background-color: #DB002F;  
-                   border: 1px solid #c92a37; padding: 8px 14px; 
-                   font-size: 1.2rem; line-height: 1.75; 
+                   border: 1px solid  #DB002F; padding: 8px 14px; 
+                   font-size: 15px; 
                    text-decoration: none !important;
-                   border-radius: 0.175rem">Lees verder</a>
+                   display: inline-block;
+                   border-radius: 5px">Lees verder</a>
                 </td>
             </tr>
             <tr><td style="padding: 28px 20px; margin: 15px 0; background-color: #ffffff;"><hr style="color: silver"/></td></tr>
