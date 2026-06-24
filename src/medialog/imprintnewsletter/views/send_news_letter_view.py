@@ -222,7 +222,7 @@ class SendNewsLetterView(BrowserView):
             <tr style="text-align:left">
                 <td style="background-color: #ffffff; text-align:left; padding-left: 20px; padding-right:20px;">
                 {image_html}
-                <h3 style="color: #DB002F ; margin-top: 14px; margin: 0; margin-top: 14px; line-height: 1.2; font-size: 30px; font-weight: 300;">
+                <h3 style="color: #DB002F ; margin-top: 14px; margin: 14px 0 7px 0; line-height: 1.2; font-size: 30px; font-weight: 300;">
                     <a href="{obj.absolute_url()}" style="text-decoration: none; color: #DB002F ;">{obj.Title()}</a>
                 </h3>
                 <p class="lead documentDescription" style="font-size: 18px; border-bottom: 0 none !important;
