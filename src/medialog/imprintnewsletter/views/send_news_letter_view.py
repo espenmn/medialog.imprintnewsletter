@@ -139,7 +139,7 @@ class SendNewsLetterView(BrowserView):
                                     {description}
                                 </div>
                                 {context.text.output if context.text else ''}
-                                <div style="color: #555; background-color: #ffffff; padding: 14px 0; margin: 14px 0;">
+                                <div style="color: #555; background-color: #ffffff; padding: 14px 0; margin: 14px 0 0;">
                                     <hr style="border: 1px dotted silver"/>
                                 </div>
                             </td>
@@ -210,8 +210,8 @@ class SendNewsLetterView(BrowserView):
             image_html = ''
             if thumbnail:
                 image_html = f"""
-                <figure style="padding: 0; margin:0">
-                    <img style="margin: 14px 0 8px" 
+                <figure style="padding: 0; margin: 0">
+                    <img style="margin: 0 0 8px" 
                         alt="{obj.image_caption or ''}"
                         src="{thumbnail.url}" width="{thumbnail.width}" height="{thumbnail.height}" />
                     <figcaption style="color: #777;">{obj.image_caption or ''}</figcaption>
@@ -222,8 +222,8 @@ class SendNewsLetterView(BrowserView):
             <tr style="text-align:left">
                 <td style="background-color: #ffffff; text-align:left; padding-left: 20px; padding-right:20px;">
                 {image_html}
-                <h3 style="color: #DB002F ; margin-top: 14px; margin: 0; line-height: 1.2; font-size: 30px; font-weight: 300;">
-                    <a href="{obj.absolute_url()}" style="text-decoration: none">{obj.Title()}</a>
+                <h3 style="color: #DB002F ; margin-top: 14px; margin: 0; margin-top: 14px; line-height: 1.2; font-size: 30px; font-weight: 300;">
+                    <a href="{obj.absolute_url()}" style="text-decoration: none; style="color: #DB002F ;">{obj.Title()}</a>
                 </h3>
                 <p class="lead documentDescription" style="font-size: 18px; border-bottom: 0 none !important;
                 color:  #2b5d9f !important;
